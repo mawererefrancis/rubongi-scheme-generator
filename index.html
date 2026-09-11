@@ -81,9 +81,13 @@ table.roc{border-collapse:collapse;width:100%;background:#fff;font-size:12px}
 table.roc th{background:var(--navy);color:#fff;padding:10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border:1px solid #0b2545}
 table.roc td{border:1px solid #94a3b8;padding:9px;vertical-align:top;line-height:1.5}
 table.roc tr:nth-child(even) td{background:#f8fafc}
+table.sig{border-collapse:collapse;width:100%;margin-top:22px}
+table.sig td{border:0;padding:16px 8px;font-size:13px;vertical-align:bottom}
+table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
 .doc-head{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--navy)}
 .doc-head .school{font-size:19px;font-weight:900;color:var(--navy);letter-spacing:1px;margin:0}
 .doc-head .doctitle{font-size:14px;font-weight:800;color:var(--blue);letter-spacing:2px;margin:6px 0;text-transform:uppercase}
+.doc-head .lessonbadge{display:inline-block;background:var(--navy);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:1px;margin:6px 0}
 .doc-head .meta{font-size:12px;color:#334e68;line-height:1.7;margin-top:8px}
 .doc-head .meta b{color:var(--navy)}
 .lesson-doc{background:#fff;max-width:900px;margin:auto;padding:36px;border:1px solid var(--border);border-radius:14px;line-height:1.55;color:#1f2937}
@@ -116,6 +120,8 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
   table.scheme td{font-size:7.8pt;padding:5px 4px;line-height:1.3}
   table.roc{font-size:9.5pt}
   table.roc th,table.roc td{padding:6px;font-size:9pt}
+  table.sig td{font-size:10pt;padding:14px 6px}
+  table.sig td.line{height:28px}
   .print-page{page-break-after:always}
   .print-page:last-child{page-break-after:auto}
   .lesson-doc h1{font-size:16pt}
@@ -235,22 +241,22 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
       <section id="page-lesson" class="hidden">
         <div class="hero no-print">
           <h2>Lesson Plan Generator</h2>
-          <p>Generates a detailed, competency-based lesson plan from the scheme you produced. Prints in <b>portrait</b>.</p>
+          <p>Each lesson plan covers <b>2 periods = 80 minutes</b>. If a week has 4 periods you get 2 lesson plans; 6 periods gives 3 lesson plans. Prints in <b>portrait</b>.</p>
         </div>
 
         <div class="panel no-print">
           <div class="grid">
-            <div class="field"><label>Week</label><select id="lessonWeek" onchange="generateLesson()"></select></div>
-            <div class="field"><label>Lesson Duration</label><input id="lessonDuration" value="80 Minutes"></div>
+            <div class="field"><label>Lesson Plan</label><select id="lessonWeek" onchange="generateLesson()"></select></div>
             <div class="field"><label>Date / Time</label><input id="lessonDate" placeholder="e.g. Tuesday | 8:00 AM – 9:20 AM"></div>
             <div class="field"><label>Total Learners</label><input id="learnerCount" value="98"></div>
+            <div class="field"><label>Duration (auto)</label><input id="lessonDuration" readonly placeholder="Auto from periods"></div>
           </div>
           <div class="actions">
             <button class="btn btn-primary" onclick="generateLesson()">✨ Generate Lesson Plan</button>
             <button class="btn btn-gold" onclick="printDoc('portrait')">🖨 Print / Save PDF</button>
             <button class="btn btn-primary" onclick="downloadWord('lesson')">📝 Download Word</button>
           </div>
-          <div id="lessonStatus" class="status">Select a week above to auto-generate the lesson plan.</div>
+          <div id="lessonStatus" class="status">Select a lesson plan above to auto-generate.</div>
         </div>
 
         <div id="lessonPreview"></div>
@@ -305,7 +311,8 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
             • All data is saved in your browser's <b>localStorage</b>.<br>
             • Scheme of work prints in <b>A4 landscape</b>; lesson plans and records print in <b>A4 portrait</b>.<br>
             • Word downloads carry the correct orientation via MS Word page settings.<br>
-            • Curriculum data is embedded from official NCDC syllabi (ICT Lower Secondary, Subsidiary ICT, Geography Lower Secondary, A-Level Geography).
+            • Lesson plans are <b>per 2-period lesson</b> (80 min each). 4 periods/week = 2 lesson plans/week.<br>
+            • Curriculum data is embedded from official NCDC syllabi.
           </p>
         </div>
       </section>
@@ -322,7 +329,6 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 
 /* ============================================================
    CURRICULUM DATA — ICT & Geography (S.1 – S.6)
-   Each topic: {topic, periods, competency, outcomes[], activities[], assessment[]}
    ============================================================ */
 const CURRICULUM = {
   "ICT": {
@@ -695,6 +701,7 @@ const CURRICULUM = {
    STATE
    ============================================================ */
 let currentScheme = [];
+let currentLessons = [];
 let currentLessonHTML = "";
 let currentRecordHTML = "";
 
@@ -903,6 +910,7 @@ function generateScheme(){
     }
 
     renderScheme();
+    buildLessonsList();
     populateLessonWeeks();
     currentLessonHTML = "";
     currentRecordHTML = "";
@@ -969,7 +977,6 @@ function renderScheme(){
       </table>
     </div>`;
 
-  // Bind remarks editing
   document.querySelectorAll("#schemePreview td[contenteditable]").forEach(td=>{
     td.addEventListener("input", function(){
       const idx = Number(this.getAttribute("data-week"));
@@ -979,18 +986,61 @@ function renderScheme(){
 }
 
 /* ============================================================
-   LESSON
+   LESSONS — one per 2-period block (each 80 min)
    ============================================================ */
+function buildLessonsList(){
+  currentLessons = [];
+  currentScheme.forEach(function(week, wi){
+    const periodsThisWeek = week.periods;
+    const numLessons = Math.max(1, Math.ceil(periodsThisWeek / 2));
+    for(let li = 0; li < numLessons; li++){
+      const periodsInThisLesson = Math.min(2, periodsThisWeek - li*2);
+      currentLessons.push({
+        id: wi + "-" + li,
+        weekIndex: wi,
+        lessonIndex: li,
+        weekNumber: week.week,
+        lessonNumber: li + 1,
+        totalLessonsInWeek: numLessons,
+        periodsInLesson: periodsInThisLesson,
+        durationMins: periodsInThisLesson * 40,
+        week: week
+      });
+    }
+  });
+}
+
 function populateLessonWeeks(){
   const sel = $("lessonWeek");
   if(!sel) return;
-  if(!currentScheme.length){
+  if(!currentLessons.length){
+    buildLessonsList();
+  }
+  if(!currentLessons.length){
     sel.innerHTML = `<option value="">— Generate scheme first —</option>`;
     return;
   }
-  sel.innerHTML = currentScheme.map(r=>
-    `<option value="${r.week}">Week ${r.week} — ${esc(r.topic).slice(0,60)}</option>`
-  ).join("");
+  sel.innerHTML = currentLessons.map(L=>{
+    const badge = (L.totalLessonsInWeek > 1)
+      ? `Lesson ${L.lessonNumber} of ${L.totalLessonsInWeek}`
+      : `Lesson 1`;
+    const label = `${badge} — Week ${L.weekNumber} — ${L.week.topic}`;
+    return `<option value="${L.id}">${esc(label)}</option>`;
+  }).join("");
+}
+
+/* Split an array evenly into `n` slices; fall back to the full array if a slice is empty */
+function splitArrayEvenly(arr, n){
+  if(!arr || !arr.length) return Array(n).fill([]);
+  if(n <= 1) return [arr.slice()];
+  const result = [];
+  for(let i=0;i<n;i++){
+    const start = Math.floor(i * arr.length / n);
+    const end = Math.floor((i+1) * arr.length / n);
+    const slice = arr.slice(start, end);
+    result.push(slice.length ? slice : [arr[arr.length-1]]);
+  }
+  return result;
 }
 
 function generateLesson(silent){
@@ -999,44 +1049,69 @@ function generateLesson(silent){
       if(!silent) toast("Generate a scheme first.");
       return;
     }
-    const w = Number($("lessonWeek").value) || currentScheme[0].week;
-    const r = currentScheme.find(x => x.week === w) || currentScheme[0];
+    if(!currentLessons.length) buildLessonsList();
+
+    const sel = $("lessonWeek");
+    const id = sel && sel.value ? sel.value : (currentLessons[0] && currentLessons[0].id);
+    const L = currentLessons.find(x => x.id === id) || currentLessons[0];
+    if(!L){ toast("No lesson found"); return; }
+
+    const week = L.week;
+    const numLessons = L.totalLessonsInWeek;
+    const li = L.lessonIndex;
+
+    const allOutcomes = week.sourceOutcomes || [];
+    const allActivities = week.sourceActivities || [];
+    const allAssessments = week.sourceAssessment || [];
+
+    const outcomesSplit = splitArrayEvenly(allOutcomes, numLessons);
+    const activitiesSplit = splitArrayEvenly(allActivities, numLessons);
+    const assessmentsSplit = splitArrayEvenly(allAssessments, numLessons);
+
+    const lessonOutcomes = outcomesSplit[li] && outcomesSplit[li].length ? outcomesSplit[li] : allOutcomes;
+    const lessonActivities = activitiesSplit[li] && activitiesSplit[li].length ? activitiesSplit[li] : allActivities;
+    const lessonAssessments = assessmentsSplit[li] && assessmentsSplit[li].length ? assessmentsSplit[li] : allAssessments;
+
+    // Auto-update the duration input
+    const durationText = L.durationMins + " Minutes (" + L.periodsInLesson + " Period" + (L.periodsInLesson>1?"s":"") + " × 40 min)";
+    if($("lessonDuration")) $("lessonDuration").value = durationText;
+
     const s = getSettings();
     const cls = $("classLevel").value;
     const term = $("term").value;
     const subject = $("subject").value;
     const date = $("lessonDate").value || "____________________________";
-    const duration = $("lessonDuration").value || "80 Minutes";
     const learners = $("learnerCount").value || "________";
 
-    const outcomes = (r.sourceOutcomes && r.sourceOutcomes.length ? r.sourceOutcomes : [r.outcomes]).slice(0, 10);
-    const activities = (r.sourceActivities && r.sourceActivities.length ? r.sourceActivities : ["Perform the practical activity aligned to the learning outcome"]).slice(0, 12);
-    const assessments = (r.sourceAssessment && r.sourceAssessment.length ? r.sourceAssessment : [r.evidence]).slice(0, 8);
-
     const list = arr => arr.map(x=>`<li>${esc(x)}</li>`).join("");
+
+    const lessonBadge = (numLessons > 1)
+      ? `Lesson Plan ${L.lessonNumber} of ${numLessons} — Week ${L.weekNumber}`
+      : `Lesson Plan — Week ${L.weekNumber}`;
 
     currentLessonHTML = `
       <div class="lesson-doc print-page">
         <div class="doc-head">
           <p class="school">${esc(s.school)}</p>
           <div class="doctitle">Lesson Plan</div>
+          <div class="lessonbadge">${esc(lessonBadge)}</div>
           <div class="meta">
             <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
           </div>
         </div>
 
         <h2>Lesson Details</h2>
-        <p><b>DATE / TIME:</b> ${esc(date)} &nbsp; (${esc(duration)})</p>
-        <p><b>TERM / WEEK:</b> ${esc(term)} · Week ${r.week}</p>
+        <p><b>DATE / TIME:</b> ${esc(date)} &nbsp; (${esc(durationText)})</p>
+        <p><b>TERM / WEEK / LESSON:</b> ${esc(term)} · Week ${L.weekNumber} · Lesson ${L.lessonNumber} of ${numLessons}</p>
         <p><b>CLASS / SUBJECT:</b> ${esc(cls)} · ${esc(subject)}</p>
-        <p><b>TOPIC:</b> ${esc(r.topic)}</p>
-        <p><b>SUB-TOPIC:</b> ${esc(r.subtopic || r.focus)}</p>
+        <p><b>TOPIC:</b> ${esc(week.topic)}</p>
+        <p><b>SUB-TOPIC:</b> ${esc(week.subtopic || week.focus)}</p>
         <p><b>TOTAL LEARNERS:</b> ${esc(learners)}</p>
-        <p><b>COMPETENCY:</b> ${esc(r.competency || "The learner applies knowledge, skills, values and attitudes to perform practical tasks and solve relevant problems.")}</p>
+        <p><b>COMPETENCY:</b> ${esc(week.competency || "The learner applies knowledge, skills, values and attitudes to perform practical tasks and solve relevant problems.")}</p>
         <p><b>METHOD / TECHNIQUE:</b> Inquiry-Based Learning, Experiential Learning, Problem &amp; Project-Based Learning, Guided Discussion, Practical Demonstration.</p>
 
-        <h2>Learning Outcomes</h2>
-        <ul>${list(outcomes)}</ul>
+        <h2>Learning Outcomes (for this lesson)</h2>
+        <ul>${list(lessonOutcomes)}</ul>
 
         <h2>Generic Skills &amp; Cross-Cutting Issues</h2>
         <p><b>Generic Skills:</b> Critical thinking and problem-solving; Creativity and innovation; Communication; Co-operation and self-directed learning; Mathematical computation and ICT proficiency.</p>
@@ -1044,8 +1119,8 @@ function generateLesson(silent){
 
         <h2>Pre-requisite Knowledge &amp; Materials</h2>
         <p><b>Pre-requisite:</b> Prior knowledge of the selected topic/sub-topic and basic computer operations.</p>
-        <p><b>Learning Materials:</b> ${esc(r.resources)}</p>
-        <p><b>References:</b> ${esc(r.reference)}</p>
+        <p><b>Learning Materials:</b> ${esc(week.resources)}</p>
+        <p><b>References:</b> ${esc(week.reference)}</p>
 
         <h2>Lesson Progression</h2>
         <table>
@@ -1066,8 +1141,8 @@ function generateLesson(silent){
             <tr>
               <td><b>PRACTICAL / COLLABORATIVE ACTIVITY</b><br>(35 mins)</td>
               <td>
-                Guide learners through the syllabus-aligned activities:
-                <ol>${list(activities)}</ol>
+                Guide learners through the syllabus-aligned activities for this lesson:
+                <ol>${list(lessonActivities)}</ol>
               </td>
               <td>Work individually, in pairs or groups; perform the task; discuss findings; produce evidence of learning (document, database, presentation, map, report, etc.).</td>
             </tr>
@@ -1081,7 +1156,7 @@ function generateLesson(silent){
 
         <h2>Assessment &amp; Reflection</h2>
         <p><b>Assessment Strategies:</b></p>
-        <ul>${list(assessments)}</ul>
+        <ul>${list(lessonAssessments)}</ul>
         <p><b>Areas of Strength:</b> _____________________________________________________________</p>
         <p><b>Areas of Weakness:</b> _____________________________________________________________</p>
         <p><b>Ways Forward:</b> __________________________________________________________________</p>
@@ -1090,7 +1165,7 @@ function generateLesson(silent){
 
     $("lessonPreview").innerHTML = currentLessonHTML;
     $("lessonStatus").className = "status ok";
-    $("lessonStatus").textContent = "✓ Lesson plan generated for Week " + r.week + " — " + r.topic;
+    $("lessonStatus").textContent = "✓ " + lessonBadge + " generated — " + L.durationMins + " minutes (" + L.periodsInLesson + " period" + (L.periodsInLesson>1?"s":"") + ").";
     if(!silent) toast("Lesson plan generated ✓");
   }catch(e){
     console.error(e);
@@ -1113,14 +1188,15 @@ function generateRecord(silent){
     const subject = $("subject").value;
     const term = $("rocTerm").value || $("term").value;
     const endDate = $("rocEnd").value;
-    const hod = $("rocHod").value || "____________________";
-    const dos = $("rocDos").value || "____________________";
+    const hod = $("rocHod").value || "";
+    const dos = $("rocDos").value || "";
 
     let rows = "";
     for(let i = 0; i < currentScheme.length; i++){
       const r = currentScheme[i];
       rows += `<tr>
-        <td>${r.week}</td>
+        <td style="text-align:center; font-weight:700;">${r.week}</td>
+        <td>${r.periods}</td>
         <td></td>
         <td><b>${esc(r.topic)}</b><br><small>${esc(r.subtopic)}</small></td>
         <td>${esc(r.outcomes)}</td>
@@ -1142,10 +1218,11 @@ function generateRecord(silent){
         <table class="roc" style="margin-top:10px">
           <thead>
             <tr>
-              <th style="width:40px">WK</th>
-              <th style="width:80px">DATE</th>
-              <th style="width:240px">TOPIC / SUB-TOPIC</th>
-              <th style="width:280px">LEARNING OUTCOMES</th>
+              <th style="width:38px; text-align:center;">WK</th>
+              <th style="width:55px; text-align:center;">PERIODS</th>
+              <th style="width:70px; text-align:center;">DATE</th>
+              <th style="width:220px">TOPIC / SUB-TOPIC</th>
+              <th style="width:260px">LEARNING OUTCOMES</th>
               <th>COMMENTS / REMARKS</th>
             </tr>
           </thead>
@@ -1153,17 +1230,48 @@ function generateRecord(silent){
         </table>
 
         <h2>General Remarks</h2>
-        <p><b>Syllabus Coverage:</b> __________________________________________________________________________</p>
-        <p><b>Challenges Faced:</b> __________________________________________________________________________</p>
-        <p><b>Recommendations for Next Term:</b> _____________________________________________________________</p>
+        <p style="margin:10px 0; line-height:2;"><b>Syllabus Coverage:</b> _____________________________________________________________________________</p>
+        <p style="margin:10px 0; line-height:2;"><b>Challenges Faced:</b> _____________________________________________________________________________</p>
+        <p style="margin:10px 0; line-height:2;"><b>Recommendations for Next Term:</b> ________________________________________________________________</p>
 
-        <h2>Signatures</h2>
-        <p><b>Teacher's Name:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ${esc(endDate||"____________")}</p>
-        <p><b>HOD Name:</b> ${esc(hod)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
-        <p><b>DOS Name:</b> ${esc(dos)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
+        <h2 style="margin-top:28px;">Signatures</h2>
+        <table class="sig">
+          <tbody>
+            <tr>
+              <td style="width:19%;"><b>Teacher's Name:</b></td>
+              <td class="line" style="width:33%; padding-bottom:6px;">${esc(s.teacher)}</td>
+              <td style="width:14%;"><b>Signature:</b></td>
+              <td class="line" style="width:20%;">&nbsp;</td>
+              <td style="width:9%;"><b>Date:</b></td>
+              <td class="line" style="width:15%; padding-bottom:6px;">${esc(endDate||"")}</td>
+            </tr>
+            <tr>
+              <td><b>HOD's Name:</b></td>
+              <td class="line" style="padding-bottom:6px;">${esc(hod)}</td>
+              <td><b>Signature:</b></td>
+              <td class="line">&nbsp;</td>
+              <td><b>Date:</b></td>
+              <td class="line">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><b>DOS's Name:</b></td>
+              <td class="line" style="padding-bottom:6px;">${esc(dos)}</td>
+              <td><b>Signature:</b></td>
+              <td class="line">&nbsp;</td>
+              <td><b>Date:</b></td>
+              <td class="line">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
       </div>`;
 
     $("recordPreview").innerHTML = currentRecordHTML;
+    document.querySelectorAll("#recordPreview td[contenteditable]").forEach(td=>{
+      td.addEventListener("input", function(){
+        const idx = Number(this.getAttribute("data-roc"));
+        if(currentScheme[idx]) currentScheme[idx].remarks = this.innerText;
+      });
+    });
     $("recordStatus").className = "status ok";
     $("recordStatus").textContent = "✓ Record of Work generated for " + currentScheme.length + " weeks.";
     if(!silent) toast("Record of Work generated ✓");
@@ -1256,9 +1364,13 @@ function downloadWord(kind){
       .doc-head { text-align:center; margin-bottom: 12px; }
       .school { font-size: 15pt; font-weight: 900; margin: 0; color: #0b2545; }
       .doctitle { font-size: 12pt; letter-spacing: 2px; margin: 4px 0; color: #1769aa; }
+      .lessonbadge { display:inline-block; background:#0b2545; color:#fff; padding:3px 12px; border-radius:14px; font-size:10pt; font-weight:800; margin:4px 0; }
       .meta { font-size: 9.5pt; line-height: 1.5; }
       .lesson-doc { max-width: none; padding: 0; }
       .roc th, .roc td { font-size: 9pt; }
+      table.sig { border-collapse: collapse; width: 100%; margin-top: 22px; }
+      table.sig td { border: 0; padding: 16px 8px; font-size: 10pt; vertical-align: bottom; }
+      table.sig td.line { border-bottom: 1.2px solid #334155; height: 30px; }
     `;
 
     const word = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
@@ -1310,6 +1422,7 @@ function loadSaved(){
       $("year").value = data.meta.year || "2026";
     }
     renderScheme();
+    buildLessonsList();
     populateLessonWeeks();
     currentLessonHTML = "";
     currentRecordHTML = "";
@@ -1349,7 +1462,6 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 });
 
-/* Global error handler — shows errors as toasts */
 window.addEventListener("error", function(e){
   console.error("Global error:", e.error || e.message);
   toast("Error: " + (e.message || "unknown"));
