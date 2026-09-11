@@ -5,22 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rubongi Army SS | Scheme • Lesson • Record of Work</title>
 <style>
-:root{
-  --navy:#0b2545;--navy2:#13315c;--blue:#1769aa;--gold:#d4a017;--gold2:#f0b429;
-  --bg:#eef2f7;--card:#fff;--text:#1f2937;--muted:#64748b;--border:#d7dee8;
-  --danger:#b42318;--ok:#087443;--okbg:#dcfae6;
-}
+:root{--navy:#0b2545;--navy2:#13315c;--blue:#1769aa;--gold:#d4a017;--gold2:#f0b429;--bg:#eef2f7;--text:#1f2937;--muted:#64748b;--border:#d7dee8;--danger:#b42318;--ok:#087443;--okbg:#dcfae6}
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 button,input,select,textarea{font:inherit}
 .hidden{display:none!important}
 
-/* ===== LOGIN ===== */
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
-  background:linear-gradient(135deg,#071a30 0%,#0b2545 40%,#1769aa 100%);position:relative;overflow:hidden}
-.login::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(circle at 20% 20%,rgba(212,160,23,.18),transparent 40%),
-  radial-gradient(circle at 80% 80%,rgba(23,105,170,.25),transparent 45%);pointer-events:none}
+/* LOGIN */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#071a30 0%,#0b2545 40%,#1769aa 100%);position:relative;overflow:hidden}
+.login::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(212,160,23,.18),transparent 40%),radial-gradient(circle at 80% 80%,rgba(23,105,170,.25),transparent 45%);pointer-events:none}
 .login-card{width:min(480px,95vw);background:#fff;border-radius:24px;padding:36px 34px;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;z-index:2}
 .brand-mark{width:84px;height:84px;border-radius:22px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;margin:auto;font-size:26px;font-weight:800;letter-spacing:1px;box-shadow:0 10px 30px rgba(23,105,170,.35)}
 .login h1{text-align:center;margin:20px 0 4px;color:var(--navy);font-size:22px;letter-spacing:.5px}
@@ -32,7 +25,6 @@ button,input,select,textarea{font:inherit}
 .btn{border:0;border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer;transition:.2s;font-size:14px}
 .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
 .btn-primary{background:var(--blue);color:#fff}
-.btn-dark{background:var(--navy);color:#fff}
 .btn-light{background:#eef3f8;color:var(--navy)}
 .btn-danger{background:#fee4e2;color:var(--danger)}
 .btn-ok{background:var(--okbg);color:var(--ok)}
@@ -46,7 +38,7 @@ button,input,select,textarea{font:inherit}
 .teacher-card .contact a{color:var(--blue);text-decoration:none;font-weight:600}
 .credit{text-align:center;color:#718096;font-size:11px;margin-top:14px}
 
-/* ===== APP ===== */
+/* APP */
 .app{min-height:100vh}
 .topbar{height:70px;background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .topbar .brand{display:flex;align-items:center;gap:12px}
@@ -55,7 +47,6 @@ button,input,select,textarea{font:inherit}
 .topbar small{display:block;color:#cbd5e1;font-weight:400;font-size:11px;margin-top:2px}
 .top-actions{display:flex;gap:8px}
 .top-actions .btn{padding:9px 14px;font-size:13px}
-
 .layout{display:grid;grid-template-columns:262px 1fr;min-height:calc(100vh - 70px)}
 .side{background:#fff;border-right:1px solid var(--border);padding:18px 14px;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto}
 .side .section-label{font-size:10px;font-weight:800;color:#94a3b8;letter-spacing:1.5px;text-transform:uppercase;padding:10px 12px 6px}
@@ -64,45 +55,37 @@ button,input,select,textarea{font:inherit}
 .navbtn.active{background:linear-gradient(90deg,#eaf3fb,#dbeafe);color:var(--blue);box-shadow:inset 3px 0 0 var(--blue)}
 .navbtn .ico{font-size:16px;width:22px;text-align:center}
 .side .note{font-size:11px;color:var(--muted);padding:12px;line-height:1.5;background:#f8fafc;border-radius:10px;margin-top:14px}
-
 .main{padding:22px;max-width:1600px;width:100%;margin:auto}
 .hero{background:linear-gradient(135deg,#fff,#f8fafc);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin-bottom:18px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
 .hero h2{margin:0 0 5px;color:var(--navy);font-size:20px;letter-spacing:.3px}
 .hero p{margin:0;color:var(--muted);font-size:13.5px}
-
 .panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
 .panel h3{margin:0 0 12px;color:var(--navy);font-size:16px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
 .status{padding:10px 14px;border-radius:9px;background:#eff6ff;color:#174ea6;font-size:12.5px;margin-top:12px;line-height:1.5}
 .status.warn{background:#fff7e6;color:#8a5300}
+.status.ok{background:#dcfae6;color:#087443}
 
-/* ===== DOCUMENT PREVIEW ===== */
+/* DOCUMENT */
 .doc-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(15,23,42,.06)}
-
 .doc-land{background:#fff;padding:22px;overflow-x:auto}
-.doc-port{background:#fff;padding:28px 34px;max-width:900px;margin:auto}
-
 table.scheme{border-collapse:collapse;width:100%;min-width:1400px;background:#fff;font-size:11px}
 table.scheme th{background:var(--navy);color:#fff;padding:9px 7px;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border:1px solid #0b2545}
 table.scheme td{border:1px solid #cbd5e1;padding:8px 7px;vertical-align:top;line-height:1.45;color:#1f2937}
 table.scheme tr:nth-child(even) td{background:#f8fafc}
 table.scheme td[contenteditable]{background:#fffdf5;min-width:80px}
 table.scheme td[contenteditable]:focus{background:#fff7e6;outline:2px solid var(--gold)}
-
 table.roc{border-collapse:collapse;width:100%;background:#fff;font-size:12px}
 table.roc th{background:var(--navy);color:#fff;padding:10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border:1px solid #0b2545}
 table.roc td{border:1px solid #94a3b8;padding:9px;vertical-align:top;line-height:1.5}
 table.roc tr:nth-child(even) td{background:#f8fafc}
-
 .doc-head{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--navy)}
 .doc-head .school{font-size:19px;font-weight:900;color:var(--navy);letter-spacing:1px;margin:0}
 .doc-head .doctitle{font-size:14px;font-weight:800;color:var(--blue);letter-spacing:2px;margin:6px 0;text-transform:uppercase}
 .doc-head .meta{font-size:12px;color:#334e68;line-height:1.7;margin-top:8px}
 .doc-head .meta b{color:var(--navy)}
-
 .lesson-doc{background:#fff;max-width:900px;margin:auto;padding:36px;border:1px solid var(--border);border-radius:14px;line-height:1.55;color:#1f2937}
 .lesson-doc h1{font-size:20px;margin:0;color:var(--navy);letter-spacing:1px;text-align:center}
 .lesson-doc h2{font-size:13.5px;color:var(--navy);letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid var(--navy);padding-bottom:5px;margin:22px 0 10px}
@@ -113,29 +96,20 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 .lesson-doc table th,.lesson-doc table td{border:1px solid #94a3b8;padding:8px;vertical-align:top}
 .lesson-doc table th{background:var(--navy);color:#fff;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
 .lesson-doc table tr:nth-child(even) td{background:#f8fafc}
-
 .note{font-size:11.5px;color:var(--muted);line-height:1.6}
-.toast{position:fixed;right:20px;bottom:20px;background:var(--navy);color:#fff;padding:13px 18px;border-radius:10px;display:none;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.3);font-weight:600;font-size:13.5px}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--navy);color:#fff;padding:13px 18px;border-radius:10px;display:none;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.3);font-weight:600;font-size:13.5px;max-width:340px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border)}.grid{grid-template-columns:repeat(2,1fr)}.topbar{height:auto;padding:12px;flex-wrap:wrap;gap:10px}}
+@media(max-width:600px){.grid,.grid-2{grid-template-columns:1fr}.main{padding:12px}.lesson-doc{padding:18px}.doc-land{padding:12px}}
 
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.kpi{background:#fff;border:1px solid var(--border);border-radius:13px;padding:16px 18px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
-.kpi b{font-size:24px;color:var(--blue);display:block}
-.kpi span{color:var(--muted);font-size:11.5px;margin-top:3px;display:block;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-
-@media(max-width:1000px){.layout{grid-template-columns:1fr}.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border)}.grid,.grid-3,.kpis{grid-template-columns:repeat(2,1fr)}.topbar{height:auto;padding:12px;flex-wrap:wrap;gap:10px}}
-@media(max-width:600px){.grid,.grid-2,.grid-3,.kpis{grid-template-columns:1fr}.main{padding:12px}.lesson-doc{padding:18px}.doc-port{padding:18px}.doc-land{padding:12px}}
-
-/* ===== PRINT ===== */
-#dynamicPrint{/* updated via JS before printing */}
+/* PRINT */
 @media print{
   body{background:#fff!important}
-  .topbar,.side,.hero,.no-print,.actions,.toast,.kpis{display:none!important}
+  .topbar,.side,.hero,.no-print,.actions,.toast{display:none!important}
   .layout{display:block;min-height:0}
   .main{padding:0;max-width:none}
   .panel{border:0;padding:0;margin:0;box-shadow:none;border-radius:0;background:#fff}
   .doc-wrap{border:0;box-shadow:none;border-radius:0;padding:0;overflow:visible;background:#fff}
   .doc-land{padding:0;overflow:visible}
-  .doc-port{padding:0;max-width:none}
   .lesson-doc{border:0;border-radius:0;padding:0;max-width:none}
   table.scheme{min-width:0;width:100%;font-size:8pt}
   table.scheme th{font-size:7.5pt;padding:5px 4px}
@@ -152,13 +126,13 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 </head>
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 <section id="login" class="login">
   <div class="login-card">
     <div class="brand-mark">RA</div>
     <h1>RUBONGI ARMY SS</h1>
     <div class="subtitle">Scheme • Lesson • Record of Work</div>
-    <form onsubmit="event.preventDefault();doLogin()">
+    <form id="loginForm" onsubmit="event.preventDefault();doLogin();">
       <div class="field"><label>Username</label><input id="loginUser" autocomplete="username" placeholder="Enter username"></div>
       <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Enter password"></div>
       <button class="btn btn-primary" type="submit">Sign In →</button>
@@ -177,14 +151,14 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
   </div>
 </section>
 
-<!-- ================= APP ================= -->
+<!-- APP -->
 <section id="app" class="app hidden">
   <header class="topbar">
     <div class="brand">
       <div class="logo">RA</div>
       <div>
         <div class="title">Rubongi Army SS — Planning Suite</div>
-        <small>S.1 – S.6 • ICT & Geography • Competency-Based Curriculum</small>
+        <small>S.1 – S.6 • ICT &amp; Geography • Competency-Based Curriculum</small>
       </div>
     </div>
     <div class="top-actions">
@@ -196,9 +170,9 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
   <div class="layout">
     <aside class="side">
       <div class="section-label">Documents</div>
-      <button id="nav-scheme"  class="navbtn active" onclick="showPage('scheme')"><span class="ico">📋</span> Scheme of Work</button>
-      <button id="nav-lesson"  class="navbtn" onclick="showPage('lesson')"><span class="ico">🧑‍🏫</span> Lesson Plan</button>
-      <button id="nav-record"  class="navbtn" onclick="showPage('record')"><span class="ico">📊</span> Record of Work</button>
+      <button id="nav-scheme" class="navbtn active" onclick="showPage('scheme')"><span class="ico">📋</span> Scheme of Work</button>
+      <button id="nav-lesson" class="navbtn" onclick="showPage('lesson')"><span class="ico">🧑‍🏫</span> Lesson Plan</button>
+      <button id="nav-record" class="navbtn" onclick="showPage('record')"><span class="ico">📊</span> Record of Work</button>
       <div class="section-label">Setup</div>
       <button id="nav-settings" class="navbtn" onclick="showPage('settings')"><span class="ico">⚙️</span> Settings</button>
       <div class="note">All documents are generated locally in your browser. Nothing leaves this device. Works 100% on GitHub Pages (static hosting).</div>
@@ -206,7 +180,7 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 
     <main class="main">
 
-      <!-- ===== SCHEME ===== -->
+      <!-- SCHEME -->
       <section id="page-scheme">
         <div class="hero no-print">
           <h2>Scheme of Work Generator</h2>
@@ -257,7 +231,7 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
         </div>
       </section>
 
-      <!-- ===== LESSON ===== -->
+      <!-- LESSON -->
       <section id="page-lesson" class="hidden">
         <div class="hero no-print">
           <h2>Lesson Plan Generator</h2>
@@ -266,7 +240,7 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 
         <div class="panel no-print">
           <div class="grid">
-            <div class="field"><label>Week</label><select id="lessonWeek"></select></div>
+            <div class="field"><label>Week</label><select id="lessonWeek" onchange="generateLesson()"></select></div>
             <div class="field"><label>Lesson Duration</label><input id="lessonDuration" value="80 Minutes"></div>
             <div class="field"><label>Date / Time</label><input id="lessonDate" placeholder="e.g. Tuesday | 8:00 AM – 9:20 AM"></div>
             <div class="field"><label>Total Learners</label><input id="learnerCount" value="98"></div>
@@ -276,12 +250,13 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
             <button class="btn btn-gold" onclick="printDoc('portrait')">🖨 Print / Save PDF</button>
             <button class="btn btn-primary" onclick="downloadWord('lesson')">📝 Download Word</button>
           </div>
+          <div id="lessonStatus" class="status">Select a week above to auto-generate the lesson plan.</div>
         </div>
 
         <div id="lessonPreview"></div>
       </section>
 
-      <!-- ===== RECORD OF WORK ===== -->
+      <!-- RECORD -->
       <section id="page-record" class="hidden">
         <div class="hero no-print">
           <h2>Record of Work Covered — End of Term</h2>
@@ -300,15 +275,16 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
             <button class="btn btn-gold" onclick="printDoc('portrait')">🖨 Print / Save PDF</button>
             <button class="btn btn-primary" onclick="downloadWord('record')">📝 Download Word</button>
           </div>
+          <div id="recordStatus" class="status">Generate a scheme first, then click Generate Record of Work.</div>
         </div>
 
         <div id="recordPreview"></div>
       </section>
 
-      <!-- ===== SETTINGS ===== -->
+      <!-- SETTINGS -->
       <section id="page-settings" class="hidden">
         <div class="hero">
-          <h2>School & System Settings</h2>
+          <h2>School &amp; System Settings</h2>
           <p>These values appear on all generated documents.</p>
         </div>
         <div class="panel">
@@ -325,7 +301,7 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
         <div class="panel">
           <h3>About this System</h3>
           <p class="note">
-            • <b>Static & GitHub Pages ready</b> — no server, no database, no PHP.<br>
+            • <b>Static &amp; GitHub Pages ready</b> — no server, no database, no PHP.<br>
             • All data is saved in your browser's <b>localStorage</b>.<br>
             • Scheme of work prints in <b>A4 landscape</b>; lesson plans and records print in <b>A4 portrait</b>.<br>
             • Word downloads carry the correct orientation via MS Word page settings.<br>
@@ -342,10 +318,12 @@ table.roc tr:nth-child(even) td{background:#f8fafc}
 <style id="dynamicPrint">@page{size:A4 landscape;margin:10mm}</style>
 
 <script>
-/* ================================================================
-   CURRICULUM DATA  (ICT + Geography, S.1 – S.6)
+"use strict";
+
+/* ============================================================
+   CURRICULUM DATA — ICT & Geography (S.1 – S.6)
    Each topic: {topic, periods, competency, outcomes[], activities[], assessment[]}
-   ================================================================ */
+   ============================================================ */
 const CURRICULUM = {
   "ICT": {
     "S.1": {
@@ -713,169 +691,235 @@ const CURRICULUM = {
   }
 };
 
-/* ================================================================
+/* ============================================================
    STATE
-   ================================================================ */
+   ============================================================ */
 let currentScheme = [];
 let currentLessonHTML = "";
 let currentRecordHTML = "";
-let printOrientation = "landscape";
 
+/* ============================================================
+   HELPERS
+   ============================================================ */
 const $ = id => document.getElementById(id);
-function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function toast(msg){$("toast").textContent=msg;$("toast").style.display="block";clearTimeout(window._t);window._t=setTimeout(()=>{$("toast").style.display="none"},2800)}
+function esc(x){return String(x==null?"":x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function toast(msg){
+  const el = $("toast");
+  if(!el) return;
+  el.textContent = msg;
+  el.style.display = "block";
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>{el.style.display="none"},2800);
+}
 
-/* ================================================================
+/* ============================================================
    LOGIN
-   ================================================================ */
+   ============================================================ */
 function doLogin(){
-  const u=$("loginUser").value.trim(), p=$("loginPass").value;
+  const u = ($("loginUser").value||"").trim();
+  const p = $("loginPass").value || "";
   if((u==="admin" && p==="Rubongi@2026") || (u==="mawerere" && p==="ICT@2026")){
     localStorage.setItem("rubongiLogged","1");
     $("login").classList.add("hidden");
     $("app").classList.remove("hidden");
+    bootApp();
     toast("Welcome, MAWERERE FRANCIS");
-    loadSettings();
-    syncPPW();
-    onSubjectChange();
   } else {
     $("loginError").classList.remove("hidden");
   }
 }
-function doLogout(){localStorage.removeItem("rubongiLogged");location.reload()}
-if(localStorage.getItem("rubongiLogged")==="1"){
-  $("login").classList.add("hidden");$("app").classList.remove("hidden");
-  document.addEventListener("DOMContentLoaded",()=>{loadSettings();syncPPW();onSubjectChange()});
+function doLogout(){
+  localStorage.removeItem("rubongiLogged");
+  location.reload();
+}
+function bootApp(){
+  loadSettings();
+  syncPPW();
+  populateLessonWeeks();
+  const today = new Date().toISOString().split("T")[0];
+  if($("rocEnd") && !$("rocEnd").value) $("rocEnd").value = today;
+  showPage("scheme");
 }
 
-/* ================================================================
-   NAV
-   ================================================================ */
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 function showPage(p){
   ["scheme","lesson","record","settings"].forEach(x=>{
-    $("page-"+x).classList.toggle("hidden", x!==p);
-    $("nav-"+x).classList.toggle("active", x===p);
+    const pg = $("page-"+x);
+    const nv = $("nav-"+x);
+    if(pg) pg.classList.toggle("hidden", x!==p);
+    if(nv) nv.classList.toggle("active", x===p);
   });
+  if(p === "lesson"){
+    populateLessonWeeks();
+    if(currentScheme.length && !currentLessonHTML) generateLesson(true);
+  }
+  if(p === "record"){
+    if(currentScheme.length && !currentRecordHTML) generateRecord(true);
+  }
 }
 
-/* ================================================================
+/* ============================================================
    SETTINGS
-   ================================================================ */
-function getSettings(){return JSON.parse(localStorage.getItem("rubongiSettings")||"null")||{
-  school:"RUBONGI ARMY SECONDARY SCHOOL",teacher:"MAWERERE FRANCIS",title:"ICT TEACHER",
-  phone:"0788223215",email:"mawererefrancis@gmail.com",address:"Tororo, Uganda"}}
+   ============================================================ */
+function getSettings(){
+  try{
+    const raw = localStorage.getItem("rubongiSettings");
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {
+    school:"RUBONGI ARMY SECONDARY SCHOOL",
+    teacher:"MAWERERE FRANCIS",
+    title:"ICT TEACHER",
+    phone:"0788223215",
+    email:"mawererefrancis@gmail.com",
+    address:"Tororo, Uganda"
+  };
+}
 function saveSettings(){
-  const s={school:$("setSchool").value,teacher:$("setTeacher").value,title:$("setTitle").value,
-    phone:$("setPhone").value,email:$("setEmail").value,address:$("setAddress").value};
-  localStorage.setItem("rubongiSettings",JSON.stringify(s));
-  $("teacherName").value=s.teacher;$("schoolName").value=s.school;
-  toast("Settings saved");
+  const s = {
+    school:$("setSchool").value,
+    teacher:$("setTeacher").value,
+    title:$("setTitle").value,
+    phone:$("setPhone").value,
+    email:$("setEmail").value,
+    address:$("setAddress").value
+  };
+  localStorage.setItem("rubongiSettings", JSON.stringify(s));
+  $("teacherName").value = s.teacher;
+  $("schoolName").value = s.school;
+  toast("Settings saved ✓");
 }
 function loadSettings(){
-  const s=getSettings();
-  $("setSchool").value=s.school;$("setTeacher").value=s.teacher;$("setTitle").value=s.title;
-  $("setPhone").value=s.phone;$("setEmail").value=s.email;$("setAddress").value=s.address;
-  $("teacherName").value=s.teacher;$("schoolName").value=s.school;
+  const s = getSettings();
+  if($("setSchool")) $("setSchool").value = s.school;
+  if($("setTeacher")) $("setTeacher").value = s.teacher;
+  if($("setTitle")) $("setTitle").value = s.title;
+  if($("setPhone")) $("setPhone").value = s.phone;
+  if($("setEmail")) $("setEmail").value = s.email;
+  if($("setAddress")) $("setAddress").value = s.address;
+  if($("teacherName")) $("teacherName").value = s.teacher;
+  if($("schoolName")) $("schoolName").value = s.school;
 }
 
-/* ================================================================
-   SUBJECT / PERIODS
-   ================================================================ */
-function onSubjectChange(){ syncPPW(); }
-function defaultPeriodsFor(c){return ({"S.1":2,"S.2":2,"S.3":4,"S.4":4,"S.5":6,"S.6":6}[c])||4}
+/* ============================================================
+   PERIODS DEFAULT
+   ============================================================ */
+function defaultPeriodsFor(c){
+  return ({"S.1":2,"S.2":2,"S.3":4,"S.4":4,"S.5":6,"S.6":6}[c]) || 4;
+}
 function syncPPW(){
-  const c=$("classLevel").value;
-  $("ppw").value = defaultPeriodsFor(c);
+  if($("ppw")) $("ppw").value = defaultPeriodsFor($("classLevel").value);
 }
+function onSubjectChange(){ syncPPW(); }
 
-/* ================================================================
-   SCHEME GENERATION
-   ================================================================ */
+/* ============================================================
+   SCHEME
+   ============================================================ */
 function getRows(subject, cls, term){
-  return (CURRICULUM[subject]?.[cls]?.[term]) || [];
+  try{
+    return (CURRICULUM[subject] && CURRICULUM[subject][cls] && CURRICULUM[subject][cls][term]) || [];
+  }catch(e){
+    console.error("getRows error", e);
+    return [];
+  }
 }
 function buildSegments(subject, cls, term){
-  const rows = getRows(subject,cls,term);
+  const rows = getRows(subject, cls, term);
   return rows.map(r=>({
     topic: r.topic,
     periods: r.periods,
-    competency: r.competency,
-    outcomes: r.outcomes||[],
-    activities: r.activities||[],
-    assessment: r.assessment||[]
+    competency: r.competency || "",
+    outcomes: r.outcomes || [],
+    activities: r.activities || [],
+    assessment: r.assessment || []
   }));
 }
+
 function generateScheme(){
-  const subject = $("subject").value;
-  const cls = $("classLevel").value;
-  const term = $("term").value;
-  const weeks = Math.max(1, Number($("weeks").value)||12);
-  const ppw = Math.max(1, Number($("ppw").value)||defaultPeriodsFor(cls));
-  const segments = buildSegments(subject, cls, term);
+  try{
+    const subject = $("subject").value;
+    const cls = $("classLevel").value;
+    const term = $("term").value;
+    const weeks = Math.max(1, Number($("weeks").value)||12);
+    const ppw = Math.max(1, Number($("ppw").value)||defaultPeriodsFor(cls));
+    const segments = buildSegments(subject, cls, term);
 
-  if(!segments.length){
-    toast("No curriculum data found for this selection.");
-    $("schemeStatus").className = "status warn";
-    $("schemeStatus").textContent = "No topics defined for " + subject + " " + cls + " " + term + ". Try another selection.";
-    return;
-  }
-
-  currentScheme = [];
-  let si = 0, remaining = segments[0].periods;
-
-  for(let w=1; w<=weeks && si < segments.length; w++){
-    let used = 0;
-    const topics = new Set(), subs = [];
-    const outs = new Set(), acts = new Set(), ass = new Set();
-    let competency = "";
-
-    while(used < ppw && si < segments.length){
-      const seg = segments[si];
-      const take = Math.min(remaining, ppw - used);
-      topics.add(seg.topic);
-      subs.push(seg.topic + " — " + take + " period" + (take>1?"s":""));
-      seg.outcomes.forEach(o=>outs.add(o));
-      seg.activities.forEach(a=>acts.add(a));
-      seg.assessment.forEach(a=>ass.add(a));
-      if(!competency && seg.competency) competency = seg.competency;
-      used += take;
-      remaining -= take;
-      if(remaining <= 0){ si++; if(si < segments.length) remaining = segments[si].periods; }
+    if(!segments.length){
+      $("schemeStatus").className = "status warn";
+      $("schemeStatus").textContent = "No curriculum data found for " + subject + " " + cls + " " + term + ". Try another combination.";
+      toast("No curriculum data for this combination");
+      return;
     }
-    if(used === 0) break;
 
-    currentScheme.push({
-      week: w,
-      periods: used,
-      topic: [...topics].join(" / "),
-      subtopic: subs.join(" • "),
-      competency: competency,
-      outcomes: [...outs].slice(0,8).join(" | "),
-      focus: [...topics].join(" / "),
-      resources: "Computers with internet access • Projector & screen • Whiteboard & markers • Relevant software (MS Office, browsers, DBMS, GIS) • Handouts • Case-study scenarios • Practical activity sheets",
-      evidence: [...ass].slice(0,4).join(" | ") || "Observation, dialogue, product evaluation",
-      reference: "NCDC official " + subject + " syllabus; approved textbook",
-      remarks: "",
-      sourceOutcomes: [...outs],
-      sourceActivities: [...acts],
-      sourceAssessment: [...ass]
-    });
+    currentScheme = [];
+    let si = 0;
+    let remaining = segments[0].periods;
+
+    for(let w = 1; w <= weeks && si < segments.length; w++){
+      let used = 0;
+      const topics = new Set();
+      const subs = [];
+      const outs = new Set();
+      const acts = new Set();
+      const ass = new Set();
+      let competency = "";
+
+      while(used < ppw && si < segments.length){
+        const seg = segments[si];
+        const take = Math.min(remaining, ppw - used);
+        topics.add(seg.topic);
+        subs.push(seg.topic + " — " + take + " period" + (take>1?"s":""));
+        seg.outcomes.forEach(o=>outs.add(o));
+        seg.activities.forEach(a=>acts.add(a));
+        seg.assessment.forEach(a=>ass.add(a));
+        if(!competency && seg.competency) competency = seg.competency;
+        used += take;
+        remaining -= take;
+        if(remaining <= 0){
+          si++;
+          if(si < segments.length) remaining = segments[si].periods;
+        }
+      }
+      if(used === 0) break;
+
+      currentScheme.push({
+        week: w,
+        periods: used,
+        topic: Array.from(topics).join(" / "),
+        subtopic: subs.join(" • "),
+        competency: competency,
+        outcomes: Array.from(outs).slice(0,8).join(" | "),
+        focus: Array.from(topics).join(" / "),
+        resources: "Computers with internet access • Projector & screen • Whiteboard & markers • Relevant software • Handouts • Case-study scenarios • Practical activity sheets",
+        evidence: Array.from(ass).slice(0,4).join(" | ") || "Observation, dialogue, product evaluation",
+        reference: "NCDC official " + subject + " syllabus; approved textbook",
+        remarks: "",
+        sourceOutcomes: Array.from(outs),
+        sourceActivities: Array.from(acts),
+        sourceAssessment: Array.from(ass)
+      });
+    }
+
+    renderScheme();
+    populateLessonWeeks();
+    currentLessonHTML = "";
+    currentRecordHTML = "";
+    $("schemeStatus").className = "status ok";
+    $("schemeStatus").textContent = "✓ Generated " + currentScheme.length + " weeks for " + subject + " " + cls + " " + term + ".";
+    toast("Scheme generated ✓");
+  }catch(e){
+    console.error(e);
+    toast("Error generating scheme: " + e.message);
   }
-
-  renderScheme();
-  populateLessonWeeks();
-  showPage("scheme");
-  $("schemeStatus").className = "status";
-  $("schemeStatus").textContent = "Generated " + currentScheme.length + " weeks for " + subject + " " + cls + " " + term + ".";
-  toast("Scheme generated ✓");
 }
 
-/* ================================================================
-   SCHEME RENDER
-   ================================================================ */
 function renderScheme(){
   const s = getSettings();
-  const cls = $("classLevel").value, term = $("term").value, y = $("year").value;
+  const cls = $("classLevel").value;
+  const term = $("term").value;
+  const y = $("year").value;
   const subject = $("subject").value;
 
   const head = `
@@ -888,8 +932,10 @@ function renderScheme(){
       </div>
     </div>`;
 
-  const rows = currentScheme.map((r,i)=>`
-    <tr>
+  let rows = "";
+  for(let i = 0; i < currentScheme.length; i++){
+    const r = currentScheme[i];
+    rows += `<tr>
       <td>${r.week}</td>
       <td>${r.periods}</td>
       <td><b>${esc(r.topic)}</b><br><small>${esc(r.subtopic)}</small></td>
@@ -898,8 +944,9 @@ function renderScheme(){
       <td>${esc(r.resources)}</td>
       <td>${esc(r.evidence)}</td>
       <td>${esc(r.reference)}</td>
-      <td contenteditable="true" oninput="currentScheme[${i}].remarks=this.innerText">${esc(r.remarks)}</td>
-    </tr>`).join("");
+      <td contenteditable="true" data-week="${i}">${esc(r.remarks)}</td>
+    </tr>`;
+  }
 
   $("schemePreview").innerHTML = `
     <div class="doc-land print-page">
@@ -921,340 +968,391 @@ function renderScheme(){
         <tbody>${rows}</tbody>
       </table>
     </div>`;
+
+  // Bind remarks editing
+  document.querySelectorAll("#schemePreview td[contenteditable]").forEach(td=>{
+    td.addEventListener("input", function(){
+      const idx = Number(this.getAttribute("data-week"));
+      if(currentScheme[idx]) currentScheme[idx].remarks = this.innerText;
+    });
+  });
 }
 
-/* ================================================================
+/* ============================================================
    LESSON
-   ================================================================ */
+   ============================================================ */
 function populateLessonWeeks(){
-  $("lessonWeek").innerHTML = currentScheme.map(r=>
-    `<option value="${r.week}">Week ${r.week} — ${esc(r.topic)}</option>`).join("");
+  const sel = $("lessonWeek");
+  if(!sel) return;
+  if(!currentScheme.length){
+    sel.innerHTML = `<option value="">— Generate scheme first —</option>`;
+    return;
+  }
+  sel.innerHTML = currentScheme.map(r=>
+    `<option value="${r.week}">Week ${r.week} — ${esc(r.topic).slice(0,60)}</option>`
+  ).join("");
 }
-function generateLesson(){
-  if(!currentScheme.length){toast("Generate a scheme first.");showPage("scheme");return}
-  const w = Number($("lessonWeek").value);
-  const r = currentScheme.find(x=>x.week===w) || currentScheme[0];
-  const s = getSettings();
-  const cls=$("classLevel").value, term=$("term").value;
-  const subject=$("subject").value;
-  const date = $("lessonDate").value || "____________________________";
-  const duration = $("lessonDuration").value || "80 Minutes";
-  const learners = $("learnerCount").value || "________";
 
-  const outcomes = (r.sourceOutcomes && r.sourceOutcomes.length ? r.sourceOutcomes : [r.outcomes]).slice(0,8);
-  const activities = (r.sourceActivities && r.sourceActivities.length ? r.sourceActivities : ["Perform the practical activity aligned to the learning outcome"]).slice(0,10);
-  const assessments = (r.sourceAssessment && r.sourceAssessment.length ? r.sourceAssessment : [r.evidence]).slice(0,6);
+function generateLesson(silent){
+  try{
+    if(!currentScheme.length){
+      if(!silent) toast("Generate a scheme first.");
+      return;
+    }
+    const w = Number($("lessonWeek").value) || currentScheme[0].week;
+    const r = currentScheme.find(x => x.week === w) || currentScheme[0];
+    const s = getSettings();
+    const cls = $("classLevel").value;
+    const term = $("term").value;
+    const subject = $("subject").value;
+    const date = $("lessonDate").value || "____________________________";
+    const duration = $("lessonDuration").value || "80 Minutes";
+    const learners = $("learnerCount").value || "________";
 
-  const list = arr => arr.map(x=>`<li>${esc(x)}</li>`).join("");
+    const outcomes = (r.sourceOutcomes && r.sourceOutcomes.length ? r.sourceOutcomes : [r.outcomes]).slice(0, 10);
+    const activities = (r.sourceActivities && r.sourceActivities.length ? r.sourceActivities : ["Perform the practical activity aligned to the learning outcome"]).slice(0, 12);
+    const assessments = (r.sourceAssessment && r.sourceAssessment.length ? r.sourceAssessment : [r.evidence]).slice(0, 8);
 
-  currentLessonHTML = `
-    <div class="lesson-doc print-page">
-      <div class="doc-head">
-        <p class="school">${esc(s.school)}</p>
-        <div class="doctitle">Lesson Plan</div>
-        <div class="meta">
-          <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
+    const list = arr => arr.map(x=>`<li>${esc(x)}</li>`).join("");
+
+    currentLessonHTML = `
+      <div class="lesson-doc print-page">
+        <div class="doc-head">
+          <p class="school">${esc(s.school)}</p>
+          <div class="doctitle">Lesson Plan</div>
+          <div class="meta">
+            <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
+          </div>
         </div>
-      </div>
 
-      <h2>Lesson Details</h2>
-      <p><b>DATE / TIME:</b> ${esc(date)} &nbsp; (${esc(duration)})</p>
-      <p><b>TERM / WEEK:</b> ${esc(term)} · Week ${r.week}</p>
-      <p><b>CLASS / SUBJECT:</b> ${esc(cls)} · ${esc(subject)}</p>
-      <p><b>TOPIC:</b> ${esc(r.topic)}</p>
-      <p><b>SUB-TOPIC:</b> ${esc(r.subtopic || r.focus)}</p>
-      <p><b>TOTAL LEARNERS:</b> ${esc(learners)}</p>
-      <p><b>COMPETENCY:</b> ${esc(r.competency || "The learner applies knowledge, skills, values and attitudes to perform practical tasks and solve relevant problems.")}</p>
-      <p><b>METHOD / TECHNIQUE:</b> Inquiry-Based Learning, Experiential Learning, Problem &amp; Project-Based Learning, Guided Discussion, Practical Demonstration.</p>
+        <h2>Lesson Details</h2>
+        <p><b>DATE / TIME:</b> ${esc(date)} &nbsp; (${esc(duration)})</p>
+        <p><b>TERM / WEEK:</b> ${esc(term)} · Week ${r.week}</p>
+        <p><b>CLASS / SUBJECT:</b> ${esc(cls)} · ${esc(subject)}</p>
+        <p><b>TOPIC:</b> ${esc(r.topic)}</p>
+        <p><b>SUB-TOPIC:</b> ${esc(r.subtopic || r.focus)}</p>
+        <p><b>TOTAL LEARNERS:</b> ${esc(learners)}</p>
+        <p><b>COMPETENCY:</b> ${esc(r.competency || "The learner applies knowledge, skills, values and attitudes to perform practical tasks and solve relevant problems.")}</p>
+        <p><b>METHOD / TECHNIQUE:</b> Inquiry-Based Learning, Experiential Learning, Problem &amp; Project-Based Learning, Guided Discussion, Practical Demonstration.</p>
 
-      <h2>Learning Outcomes</h2>
-      <ul>${list(outcomes)}</ul>
+        <h2>Learning Outcomes</h2>
+        <ul>${list(outcomes)}</ul>
 
-      <h2>Generic Skills &amp; Cross-Cutting Issues</h2>
-      <p><b>Generic Skills:</b> Critical thinking and problem-solving; Creativity and innovation; Communication; Co-operation and self-directed learning; Mathematical computation and ICT proficiency.</p>
-      <p><b>Cross-Cutting Issues:</b> Environmental awareness; Health awareness; Life skills; Mixed abilities and involvement; Socio-economic challenges; Citizenship and patriotism.</p>
+        <h2>Generic Skills &amp; Cross-Cutting Issues</h2>
+        <p><b>Generic Skills:</b> Critical thinking and problem-solving; Creativity and innovation; Communication; Co-operation and self-directed learning; Mathematical computation and ICT proficiency.</p>
+        <p><b>Cross-Cutting Issues:</b> Environmental awareness; Health awareness; Life skills; Mixed abilities and involvement; Socio-economic challenges; Citizenship and patriotism.</p>
 
-      <h2>Pre-requisite Knowledge &amp; Materials</h2>
-      <p><b>Pre-requisite:</b> Prior knowledge of the selected topic/sub-topic and basic computer operations.</p>
-      <p><b>Learning Materials:</b> ${esc(r.resources)}</p>
-      <p><b>References:</b> ${esc(r.reference)}</p>
+        <h2>Pre-requisite Knowledge &amp; Materials</h2>
+        <p><b>Pre-requisite:</b> Prior knowledge of the selected topic/sub-topic and basic computer operations.</p>
+        <p><b>Learning Materials:</b> ${esc(r.resources)}</p>
+        <p><b>References:</b> ${esc(r.reference)}</p>
 
-      <h2>Lesson Progression</h2>
-      <table>
-        <thead>
-          <tr><th style="width:22%">Stages / Time</th><th style="width:39%">Teacher's Activities</th><th style="width:39%">Learners' Activities</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>INTRODUCTION</b><br>(10 mins)</td>
-            <td>Introduce the lesson using a relevant question, demonstration, real-life scenario or problem. Link the lesson to prior knowledge and state the learning outcomes clearly.</td>
-            <td>Respond to questions, share prior experiences and identify what they already know about the topic.</td>
-          </tr>
-          <tr>
-            <td><b>DEVELOPMENT</b><br>(20 mins)</td>
-            <td>Explain and demonstrate the key concept. Use probing questions to deepen understanding. Guide learners through the process with worked examples.</td>
-            <td>Observe, ask questions, discuss in pairs/groups and follow the demonstration carefully.</td>
-          </tr>
-          <tr>
-            <td><b>PRACTICAL / COLLABORATIVE ACTIVITY</b><br>(35 mins)</td>
-            <td>
-              Guide learners through the syllabus-aligned activities:
-              <ol>${list(activities)}</ol>
-            </td>
-            <td>Work individually, in pairs or groups; perform the task; discuss findings; produce evidence of learning (document, database, presentation, map, report, etc.).</td>
-          </tr>
-          <tr>
-            <td><b>CONCLUSION</b><br>(15 mins)</td>
-            <td>Lead a synthesis of the lesson, correct misconceptions and conduct formative assessment through observation, dialogue or product evaluation.</td>
-            <td>Present findings, answer questions, reflect on the lesson and summarise key learning points.</td>
-          </tr>
-        </tbody>
-      </table>
+        <h2>Lesson Progression</h2>
+        <table>
+          <thead>
+            <tr><th style="width:22%">Stages / Time</th><th style="width:39%">Teacher's Activities</th><th style="width:39%">Learners' Activities</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>INTRODUCTION</b><br>(10 mins)</td>
+              <td>Introduce the lesson using a relevant question, demonstration, real-life scenario or problem. Link the lesson to prior knowledge and state the learning outcomes clearly.</td>
+              <td>Respond to questions, share prior experiences and identify what they already know about the topic.</td>
+            </tr>
+            <tr>
+              <td><b>DEVELOPMENT</b><br>(20 mins)</td>
+              <td>Explain and demonstrate the key concept. Use probing questions to deepen understanding. Guide learners through the process with worked examples.</td>
+              <td>Observe, ask questions, discuss in pairs/groups and follow the demonstration carefully.</td>
+            </tr>
+            <tr>
+              <td><b>PRACTICAL / COLLABORATIVE ACTIVITY</b><br>(35 mins)</td>
+              <td>
+                Guide learners through the syllabus-aligned activities:
+                <ol>${list(activities)}</ol>
+              </td>
+              <td>Work individually, in pairs or groups; perform the task; discuss findings; produce evidence of learning (document, database, presentation, map, report, etc.).</td>
+            </tr>
+            <tr>
+              <td><b>CONCLUSION</b><br>(15 mins)</td>
+              <td>Lead a synthesis of the lesson, correct misconceptions and conduct formative assessment through observation, dialogue or product evaluation.</td>
+              <td>Present findings, answer questions, reflect on the lesson and summarise key learning points.</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <h2>Assessment &amp; Reflection</h2>
-      <p><b>Assessment Strategies:</b></p>
-      <ul>${list(assessments)}</ul>
-      <p><b>Areas of Strength:</b> _____________________________________________________________</p>
-      <p><b>Areas of Weakness:</b> _____________________________________________________________</p>
-      <p><b>Ways Forward:</b> __________________________________________________________________</p>
-      <p style="margin-top:26px"><b>Teacher's Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> __________________</p>
-    </div>`;
+        <h2>Assessment &amp; Reflection</h2>
+        <p><b>Assessment Strategies:</b></p>
+        <ul>${list(assessments)}</ul>
+        <p><b>Areas of Strength:</b> _____________________________________________________________</p>
+        <p><b>Areas of Weakness:</b> _____________________________________________________________</p>
+        <p><b>Ways Forward:</b> __________________________________________________________________</p>
+        <p style="margin-top:26px"><b>Teacher's Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> __________________</p>
+      </div>`;
 
-  $("lessonPreview").innerHTML = currentLessonHTML;
-  showPage("lesson");
-  toast("Lesson plan generated ✓");
+    $("lessonPreview").innerHTML = currentLessonHTML;
+    $("lessonStatus").className = "status ok";
+    $("lessonStatus").textContent = "✓ Lesson plan generated for Week " + r.week + " — " + r.topic;
+    if(!silent) toast("Lesson plan generated ✓");
+  }catch(e){
+    console.error(e);
+    toast("Error generating lesson plan: " + e.message);
+  }
 }
 
-/* ================================================================
-   RECORD OF WORK COVERED
-   ================================================================ */
-function generateRecord(){
-  if(!currentScheme.length){toast("Generate a scheme first.");showPage("scheme");return}
-  const s = getSettings();
-  const cls = $("classLevel").value, y = $("year").value, subject = $("subject").value;
-  const term = $("rocTerm").value || $("term").value;
-  const endDate = $("rocEnd").value;
-  const hod = $("rocHod").value || "____________________";
-  const dos = $("rocDos").value || "____________________";
+/* ============================================================
+   RECORD OF WORK
+   ============================================================ */
+function generateRecord(silent){
+  try{
+    if(!currentScheme.length){
+      if(!silent) toast("Generate a scheme first.");
+      return;
+    }
+    const s = getSettings();
+    const cls = $("classLevel").value;
+    const y = $("year").value;
+    const subject = $("subject").value;
+    const term = $("rocTerm").value || $("term").value;
+    const endDate = $("rocEnd").value;
+    const hod = $("rocHod").value || "____________________";
+    const dos = $("rocDos").value || "____________________";
 
-  const rows = currentScheme.map(r=>{
-    const dateCell = ""; // leave blank for teacher to fill
-    return `<tr>
-      <td>${r.week}</td>
-      <td></td>
-      <td><b>${esc(r.topic)}</b><br><small>${esc(r.subtopic)}</small></td>
-      <td>${esc(r.outcomes)}</td>
-      <td contenteditable="true">${esc(r.remarks)||"Covered as planned."}</td>
-    </tr>`;
-  }).join("");
+    let rows = "";
+    for(let i = 0; i < currentScheme.length; i++){
+      const r = currentScheme[i];
+      rows += `<tr>
+        <td>${r.week}</td>
+        <td></td>
+        <td><b>${esc(r.topic)}</b><br><small>${esc(r.subtopic)}</small></td>
+        <td>${esc(r.outcomes)}</td>
+        <td contenteditable="true" data-roc="${i}">${esc(r.remarks)||"Covered as planned."}</td>
+      </tr>`;
+    }
 
-  currentRecordHTML = `
-    <div class="lesson-doc print-page" style="max-width:1000px">
-      <div class="doc-head">
-        <p class="school">${esc(s.school)}</p>
-        <div class="doctitle">Record of Work Covered — End of Term</div>
-        <div class="meta">
-          <b>SUBJECT:</b> ${esc(subject)} &nbsp;&nbsp; <b>CLASS:</b> ${esc(cls)} &nbsp;&nbsp; <b>TERM:</b> ${esc(term)} &nbsp;&nbsp; <b>YEAR:</b> ${esc(y)}<br>
-          <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
+    currentRecordHTML = `
+      <div class="lesson-doc print-page" style="max-width:1000px">
+        <div class="doc-head">
+          <p class="school">${esc(s.school)}</p>
+          <div class="doctitle">Record of Work Covered — End of Term</div>
+          <div class="meta">
+            <b>SUBJECT:</b> ${esc(subject)} &nbsp;&nbsp; <b>CLASS:</b> ${esc(cls)} &nbsp;&nbsp; <b>TERM:</b> ${esc(term)} &nbsp;&nbsp; <b>YEAR:</b> ${esc(y)}<br>
+            <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
+          </div>
         </div>
-      </div>
 
-      <table class="roc" style="margin-top:10px">
-        <thead>
-          <tr>
-            <th style="width:40px">WK</th>
-            <th style="width:80px">DATE</th>
-            <th style="width:240px">TOPIC / SUB-TOPIC</th>
-            <th style="width:280px">LEARNING OUTCOMES</th>
-            <th>COMMENTS / REMARKS</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
+        <table class="roc" style="margin-top:10px">
+          <thead>
+            <tr>
+              <th style="width:40px">WK</th>
+              <th style="width:80px">DATE</th>
+              <th style="width:240px">TOPIC / SUB-TOPIC</th>
+              <th style="width:280px">LEARNING OUTCOMES</th>
+              <th>COMMENTS / REMARKS</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
 
-      <h2>General Remarks</h2>
-      <p><b>Syllabus Coverage:</b> __________________________________________________________________________</p>
-      <p><b>Challenges Faced:</b> __________________________________________________________________________</p>
-      <p><b>Recommendations for Next Term:</b> _____________________________________________________________</p>
+        <h2>General Remarks</h2>
+        <p><b>Syllabus Coverage:</b> __________________________________________________________________________</p>
+        <p><b>Challenges Faced:</b> __________________________________________________________________________</p>
+        <p><b>Recommendations for Next Term:</b> _____________________________________________________________</p>
 
-      <h2>Signatures</h2>
-      <p><b>Teacher's Name:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ${esc(endDate||"____________")}</p>
-      <p><b>HOD Name:</b> ${esc(hod)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
-      <p><b>DOS Name:</b> ${esc(dos)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
-    </div>`;
+        <h2>Signatures</h2>
+        <p><b>Teacher's Name:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ${esc(endDate||"____________")}</p>
+        <p><b>HOD Name:</b> ${esc(hod)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
+        <p><b>DOS Name:</b> ${esc(dos)} &nbsp;&nbsp; <b>Signature:</b> __________________________ &nbsp;&nbsp; <b>Date:</b> ____________</p>
+      </div>`;
 
-  $("recordPreview").innerHTML = currentRecordHTML;
-  showPage("record");
-  toast("Record of Work generated ✓");
+    $("recordPreview").innerHTML = currentRecordHTML;
+    $("recordStatus").className = "status ok";
+    $("recordStatus").textContent = "✓ Record of Work generated for " + currentScheme.length + " weeks.";
+    if(!silent) toast("Record of Work generated ✓");
+  }catch(e){
+    console.error(e);
+    toast("Error generating record: " + e.message);
+  }
 }
 
-/* ================================================================
-   PRINT (dynamic orientation)
-   ================================================================ */
+/* ============================================================
+   PRINT
+   ============================================================ */
 function printDoc(orient){
-  printOrientation = orient;
-  // Rebuild the @page rule dynamically so the browser knows the orientation
   const style = $("dynamicPrint");
-  style.textContent = `@page { size: A4 ${orient}; margin: ${orient==="landscape"?"10mm":"14mm"}; }`;
-  // Give the browser a moment to apply then print
+  if(style){
+    style.textContent = "@page { size: A4 " + orient + "; margin: " + (orient==="landscape"?"10mm":"14mm") + "; }";
+  }
   setTimeout(()=>window.print(), 120);
 }
 
-/* ================================================================
-   WORD DOWNLOAD (with correct orientation via MS Word page settings)
-   ================================================================ */
+/* ============================================================
+   WORD DOWNLOAD
+   ============================================================ */
 function downloadWord(kind){
-  let html = "";
-  let filename = "Document.doc";
-  let orient = "portrait";
+  try{
+    let html = "";
+    let filename = "Document.doc";
+    let orient = "portrait";
 
-  if(kind === "scheme"){
-    if(!currentScheme.length){toast("Generate a scheme first.");return}
-    const s = getSettings();
-    const cls=$("classLevel").value, term=$("term").value, y=$("year").value, subject=$("subject").value;
-    const rows = currentScheme.map(r=>`
-      <tr>
-        <td>${esc(r.week)}</td>
-        <td>${esc(r.periods)}</td>
-        <td><b>${esc(r.topic)}</b><br>${esc(r.subtopic)}</td>
-        <td>${esc(r.outcomes)}</td>
-        <td>${esc(r.competency || r.focus)}</td>
-        <td>${esc(r.resources)}</td>
-        <td>${esc(r.evidence)}</td>
-        <td>${esc(r.reference)}</td>
-        <td>${esc(r.remarks)}</td>
-      </tr>`).join("");
-    html = `
-      <div style="text-align:center">
-        <h2 style="margin:0;font-size:16pt">${esc(s.school)}</h2>
-        <h3 style="margin:4px 0;font-size:12pt">SCHEME OF WORK</h3>
-        <p style="margin:2px 0;font-size:10pt"><b>${esc(subject)} | ${esc(cls)} | ${esc(term)} | ${esc(y)}</b></p>
-        <p style="margin:2px 0;font-size:10pt"><b>Teacher:</b> ${esc(s.teacher)} &nbsp; <b>Phone:</b> ${esc(s.phone)} &nbsp; <b>Email:</b> ${esc(s.email)}</p>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>WK</th><th>PERIODS</th><th>TOPIC / SUB-TOPIC</th><th>LEARNING OUTCOMES</th>
-            <th>LEARNING OUTCOME FOCUS</th><th>TEACHING &amp; LEARNING RESOURCES</th>
-            <th>EVIDENCE OF ACHIEVEMENT</th><th>REFERENCES</th><th>REMARKS</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>`;
-    filename = "Scheme_of_Work_" + subject + "_" + cls + ".doc";
-    orient = "landscape";
-  } else if(kind === "lesson"){
-    if(!currentLessonHTML){toast("Generate a lesson plan first.");return}
-    html = currentLessonHTML;
-    filename = "Lesson_Plan.doc";
-    orient = "portrait";
-  } else if(kind === "record"){
-    if(!currentRecordHTML){toast("Generate a record of work first.");return}
-    html = currentRecordHTML;
-    filename = "Record_of_Work.doc";
-    orient = "portrait";
+    if(kind === "scheme"){
+      if(!currentScheme.length){toast("Generate a scheme first.");return}
+      const s = getSettings();
+      const cls=$("classLevel").value, term=$("term").value, y=$("year").value, subject=$("subject").value;
+      let rows = "";
+      currentScheme.forEach(r=>{
+        rows += `<tr>
+          <td>${esc(r.week)}</td>
+          <td>${esc(r.periods)}</td>
+          <td><b>${esc(r.topic)}</b><br>${esc(r.subtopic)}</td>
+          <td>${esc(r.outcomes)}</td>
+          <td>${esc(r.competency||r.focus)}</td>
+          <td>${esc(r.resources)}</td>
+          <td>${esc(r.evidence)}</td>
+          <td>${esc(r.reference)}</td>
+          <td>${esc(r.remarks)}</td>
+        </tr>`;
+      });
+      html = `
+        <div style="text-align:center">
+          <h2 style="margin:0;font-size:16pt">${esc(s.school)}</h2>
+          <h3 style="margin:4px 0;font-size:12pt">SCHEME OF WORK</h3>
+          <p style="margin:2px 0;font-size:10pt"><b>${esc(subject)} | ${esc(cls)} | ${esc(term)} | ${esc(y)}</b></p>
+          <p style="margin:2px 0;font-size:10pt"><b>Teacher:</b> ${esc(s.teacher)} &nbsp; <b>Phone:</b> ${esc(s.phone)} &nbsp; <b>Email:</b> ${esc(s.email)}</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>WK</th><th>PERIODS</th><th>TOPIC / SUB-TOPIC</th><th>LEARNING OUTCOMES</th>
+              <th>LEARNING OUTCOME FOCUS</th><th>TEACHING &amp; LEARNING RESOURCES</th>
+              <th>EVIDENCE OF ACHIEVEMENT</th><th>REFERENCES</th><th>REMARKS</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+      filename = "Scheme_of_Work_" + subject + "_" + cls + ".doc";
+      orient = "landscape";
+    } else if(kind === "lesson"){
+      if(!currentLessonHTML){toast("Generate a lesson plan first.");return}
+      html = currentLessonHTML;
+      filename = "Lesson_Plan.doc";
+      orient = "portrait";
+    } else if(kind === "record"){
+      if(!currentRecordHTML){toast("Generate a record of work first.");return}
+      html = currentRecordHTML;
+      filename = "Record_of_Work.doc";
+      orient = "portrait";
+    }
+
+    const css = `
+      @page { size: A4 ${orient}; mso-page-orientation: ${orient}; margin: 12mm; }
+      body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; color:#1f2937; }
+      h1,h2,h3 { color:#0b2545; }
+      h2 { font-size: 11pt; border-bottom:1px solid #0b2545; padding-bottom:3px; }
+      table { border-collapse: collapse; width: 100%; }
+      th, td { border: 1px solid #444; padding: 5px; vertical-align: top; font-size: 8.5pt; }
+      th { background: #0b2545; color: #fff; text-align: left; font-size: 8pt; }
+      tr:nth-child(even) td { background: #f4f7fb; }
+      ul { margin: 4px 0 4px 20px; padding: 0; }
+      li { margin: 2px 0; font-size: 10pt; }
+      .doc-head { text-align:center; margin-bottom: 12px; }
+      .school { font-size: 15pt; font-weight: 900; margin: 0; color: #0b2545; }
+      .doctitle { font-size: 12pt; letter-spacing: 2px; margin: 4px 0; color: #1769aa; }
+      .meta { font-size: 9.5pt; line-height: 1.5; }
+      .lesson-doc { max-width: none; padding: 0; }
+      .roc th, .roc td { font-size: 9pt; }
+    `;
+
+    const word = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+      + '<head><meta charset="utf-8"><title>' + esc(filename) + '</title>'
+      + '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->'
+      + '<style>' + css + '</style></head><body>' + html + '</body></html>';
+
+    const blob = new Blob(['\ufeff', word], {type:"application/msword"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
+    toast("Word document downloaded ✓");
+  }catch(e){
+    console.error(e);
+    toast("Download error: " + e.message);
   }
-
-  const css = `
-    @page { size: A4 ${orient}; mso-page-orientation: ${orient}; margin: 12mm; }
-    body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; color:#1f2937; }
-    h1,h2,h3 { color:#0b2545; }
-    h2 { font-size: 11pt; border-bottom:1px solid #0b2545; padding-bottom:3px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #444; padding: 5px; vertical-align: top; font-size: 8.5pt; }
-    th { background: #0b2545; color: #fff; text-align: left; font-size: 8pt; }
-    tr:nth-child(even) td { background: #f4f7fb; }
-    ul { margin: 4px 0 4px 20px; padding: 0; }
-    li { margin: 2px 0; font-size: 10pt; }
-    .doc-head { text-align:center; margin-bottom: 12px; }
-    .school { font-size: 15pt; font-weight: 900; margin: 0; color: #0b2545; }
-    .doctitle { font-size: 12pt; letter-spacing: 2px; margin: 4px 0; color: #1769aa; }
-    .meta { font-size: 9.5pt; line-height: 1.5; }
-    .lesson-doc { max-width: none; padding: 0; }
-    .roc th, .roc td { font-size: 9pt; }
-  `;
-
-  const word = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
-        xmlns:w='urn:schemas-microsoft-com:office:word'
-        xmlns='http://www.w3.org/TR/REC-html40'>
-    <head>
-      <meta charset="utf-8">
-      <title>${esc(filename)}</title>
-      <!--[if gte mso 9]>
-      <xml>
-        <w:WordDocument>
-          <w:View>Print</w:View>
-          <w:Zoom>100</w:Zoom>
-        </w:WordDocument>
-      </xml>
-      <![endif]-->
-      <style>${css}</style>
-    </head>
-    <body>${html}</body>
-    </html>`;
-
-  const blob = new Blob(['\ufeff', word], {type:"application/msword"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
-  toast("Word document downloaded ✓");
 }
 
-/* ================================================================
+/* ============================================================
    SAVE / LOAD / COPY
-   ================================================================ */
+   ============================================================ */
 function saveScheme(){
   if(!currentScheme.length){toast("Nothing to save.");return}
   localStorage.setItem("rubongiScheme", JSON.stringify({
     meta:{
-      subject:$("subject").value, cls:$("classLevel").value, term:$("term").value, year:$("year").value
+      subject:$("subject").value,
+      cls:$("classLevel").value,
+      term:$("term").value,
+      year:$("year").value
     },
     rows: currentScheme
   }));
   toast("Scheme saved in this browser ✓");
 }
 function loadSaved(){
-  const raw = localStorage.getItem("rubongiScheme");
-  if(!raw){toast("No saved scheme found.");return}
-  const data = JSON.parse(raw);
-  currentScheme = data.rows || [];
-  if(data.meta){
-    $("subject").value = data.meta.subject || "ICT";
-    $("classLevel").value = data.meta.cls || "S.1";
-    $("term").value = data.meta.term || "Term 1";
-    $("year").value = data.meta.year || "2026";
+  try{
+    const raw = localStorage.getItem("rubongiScheme");
+    if(!raw){toast("No saved scheme found.");return}
+    const data = JSON.parse(raw);
+    currentScheme = data.rows || [];
+    if(data.meta){
+      $("subject").value = data.meta.subject || "ICT";
+      $("classLevel").value = data.meta.cls || "S.1";
+      $("term").value = data.meta.term || "Term 1";
+      $("year").value = data.meta.year || "2026";
+    }
+    renderScheme();
+    populateLessonWeeks();
+    currentLessonHTML = "";
+    currentRecordHTML = "";
+    showPage("scheme");
+    toast("Saved scheme loaded ✓");
+  }catch(e){
+    console.error(e);
+    toast("Load error: " + e.message);
   }
-  renderScheme();
-  populateLessonWeeks();
-  showPage("scheme");
-  toast("Saved scheme loaded ✓");
 }
 function copyDoc(kind){
   let text = "";
   if(kind === "scheme") text = $("schemePreview").innerText;
   if(kind === "lesson") text = $("lessonPreview").innerText;
   if(kind === "record") text = $("recordPreview").innerText;
-  navigator.clipboard?.writeText(text);
-  toast("Copied to clipboard ✓");
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>toast("Copied to clipboard ✓"));
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    toast("Copied to clipboard ✓");
+  }
 }
 
-/* ================================================================
+/* ============================================================
    INIT
-   ================================================================ */
-document.addEventListener("DOMContentLoaded", ()=>{
-  if(localStorage.getItem("rubongiLogged")==="1"){
-    loadSettings();
-    syncPPW();
-    onSubjectChange();
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", function(){
+  if(localStorage.getItem("rubongiLogged") === "1"){
+    $("login").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    bootApp();
   }
-  // Auto-fill end date with today
-  const d = new Date();
-  const iso = d.toISOString().split("T")[0];
-  if($("rocEnd")) $("rocEnd").value = iso;
+});
+
+/* Global error handler — shows errors as toasts */
+window.addEventListener("error", function(e){
+  console.error("Global error:", e.error || e.message);
+  toast("Error: " + (e.message || "unknown"));
 });
 </script>
 </body>
