@@ -68,6 +68,22 @@ button,input,select,textarea{font:inherit}
 .status.warn{background:#fff7e6;color:#8a5300}
 .status.ok{background:#dcfae6;color:#087443}
 
+/* CUSTOM TOPICS */
+.custom-toggle-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;background:linear-gradient(135deg,#fff7e6,#fffdf5);border:1.5px dashed var(--gold);border-radius:12px}
+.custom-toggle-row input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--gold)}
+.custom-toggle-row label{margin:0;cursor:pointer;font-weight:800;font-size:13px;color:#5c3d00;text-transform:none;letter-spacing:0}
+.custom-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:16px;background:#f8fafc}
+.custom-panel .cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.custom-panel .cp-head b{color:var(--navy);font-size:13.5px}
+.custom-list{max-height:320px;overflow-y:auto;display:grid;grid-template-columns:1fr;gap:6px;padding-right:4px}
+.custom-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#fff;border:1.5px solid #d7dee8;border-radius:9px;cursor:pointer;font-size:12.5px;transition:.15s}
+.custom-item:hover{border-color:var(--blue);background:#f8fcff}
+.custom-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:var(--blue);flex-shrink:0}
+.custom-item .tname{font-weight:800;color:var(--navy)}
+.custom-item .tterm{display:inline-block;background:#eaf3fb;color:var(--blue);padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:800;margin-left:8px;letter-spacing:.4px}
+.custom-item .tper{color:var(--muted);font-size:11px;margin-left:8px;font-weight:600}
+.custom-item.checked{background:#eaf3fb;border-color:var(--blue)}
+
 /* DOCUMENT */
 .doc-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(15,23,42,.06)}
 .doc-land{background:#fff;padding:22px;overflow-x:auto}
@@ -88,6 +104,7 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
 .doc-head .school{font-size:19px;font-weight:900;color:var(--navy);letter-spacing:1px;margin:0}
 .doc-head .doctitle{font-size:14px;font-weight:800;color:var(--blue);letter-spacing:2px;margin:6px 0;text-transform:uppercase}
 .doc-head .lessonbadge{display:inline-block;background:var(--navy);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:1px;margin:6px 0}
+.doc-head .custombadge{display:inline-block;background:linear-gradient(135deg,#d4a017,#f0b429);color:#3b2700;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.6px;margin:6px 0}
 .doc-head .meta{font-size:12px;color:#334e68;line-height:1.7;margin-top:8px}
 .doc-head .meta b{color:var(--navy)}
 .lesson-doc{background:#fff;max-width:900px;margin:auto;padding:36px;border:1px solid var(--border);border-radius:14px;line-height:1.55;color:#1f2937}
@@ -202,7 +219,7 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
               </select>
             </div>
             <div class="field"><label>Class</label>
-              <select id="classLevel" onchange="syncPPW()">
+              <select id="classLevel" onchange="onClassChange()">
                 <option>S.1</option><option>S.2</option><option>S.3</option>
                 <option>S.4</option><option>S.5</option><option>S.6</option>
               </select>
@@ -216,7 +233,29 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
             <div class="field"><label>Teacher Name</label><input id="teacherName" value="MAWERERE FRANCIS"></div>
             <div class="field"><label>School Name</label><input id="schoolName" value="RUBONGI ARMY SECONDARY SCHOOL"></div>
           </div>
-          <div class="field"><label>Additional Requirements / Notes (optional)</label>
+
+          <!-- OPTIONAL CUSTOM TOPIC SELECTION -->
+          <div class="custom-toggle-row">
+            <input type="checkbox" id="customTopicsToggle" onchange="toggleCustomTopics()">
+            <label for="customTopicsToggle">✋ Custom topic selection (optional) — pick topics across any term, teach ahead of the syllabus</label>
+          </div>
+          <div id="customTopicsPanel" class="custom-panel hidden">
+            <div class="cp-head">
+              <b>Available topics for <span id="customSubjectLabel">this subject</span> <span id="customClassLabel"></span> — all terms</b>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectAllTopics()">✓ Select all</button>
+                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="clearAllTopics()">✗ Clear</button>
+                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 1')">Term 1</button>
+                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 2')">Term 2</button>
+                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 3')">Term 3</button>
+              </div>
+            </div>
+            <div id="customTopicsList" class="custom-list"></div>
+            <div class="note" style="margin-top:10px">When enabled, the scheme will use <b>ONLY</b> the topics you tick, in the order listed above — regardless of the term they belong to in the syllabus. Leave this unticked to follow the official term sequence.</div>
+            <div id="customTopicsCount" class="status" style="margin-top:8px">No topics selected yet.</div>
+          </div>
+
+          <div class="field" style="margin-top:16px"><label>Additional Requirements / Notes (optional)</label>
             <textarea id="requirements" rows="2" placeholder="e.g. include practical activities, ICT lab work, field study..."></textarea>
           </div>
           <div class="actions">
@@ -312,6 +351,7 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
             • Scheme of work prints in <b>A4 landscape</b>; lesson plans and records print in <b>A4 portrait</b>.<br>
             • Word downloads carry the correct orientation via MS Word page settings.<br>
             • Lesson plans are <b>per 2-period lesson</b> (80 min each). 4 periods/week = 2 lesson plans/week.<br>
+            • <b>Custom topic selection</b> (optional) lets you pick topics across any term to teach ahead of the syllabus.<br>
             • Curriculum data is embedded from official NCDC syllabi.
           </p>
         </div>
@@ -704,6 +744,7 @@ let currentScheme = [];
 let currentLessons = [];
 let currentLessonHTML = "";
 let currentRecordHTML = "";
+let currentSchemeIsCustom = false;
 
 /* ============================================================
    HELPERS
@@ -819,7 +860,137 @@ function defaultPeriodsFor(c){
 function syncPPW(){
   if($("ppw")) $("ppw").value = defaultPeriodsFor($("classLevel").value);
 }
-function onSubjectChange(){ syncPPW(); }
+function onSubjectChange(){
+  syncPPW();
+  if($("customTopicsToggle") && $("customTopicsToggle").checked) renderCustomTopicsList();
+}
+function onClassChange(){
+  syncPPW();
+  if($("customTopicsToggle") && $("customTopicsToggle").checked) renderCustomTopicsList();
+}
+
+/* ============================================================
+   CUSTOM TOPIC SELECTION (optional feature)
+   ============================================================ */
+function toggleCustomTopics(){
+  const on = $("customTopicsToggle").checked;
+  $("customTopicsPanel").classList.toggle("hidden", !on);
+  if(on){
+    renderCustomTopicsList();
+  }
+}
+
+function getAllTopicsFor(subject, cls){
+  const all = [];
+  ["Term 1","Term 2","Term 3"].forEach(function(term){
+    const rows = getRows(subject, cls, term);
+    rows.forEach(function(r){
+      all.push({
+        term: term,
+        topic: r.topic,
+        periods: r.periods,
+        competency: r.competency || "",
+        outcomes: r.outcomes || [],
+        activities: r.activities || [],
+        assessment: r.assessment || []
+      });
+    });
+  });
+  return all;
+}
+
+function renderCustomTopicsList(){
+  const subject = $("subject").value;
+  const cls = $("classLevel").value;
+  const list = getAllTopicsFor(subject, cls);
+
+  if($("customSubjectLabel")) $("customSubjectLabel").textContent = subject;
+  if($("customClassLabel")) $("customClassLabel").textContent = cls;
+
+  const container = $("customTopicsList");
+  if(!list.length){
+    container.innerHTML = '<div class="note" style="padding:14px">No topics available for this subject/class.</div>';
+    updateCustomTopicsCount();
+    return;
+  }
+
+  // Preserve ticked state across re-renders
+  const previouslyTicked = new Set();
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){
+    if(c.checked){
+      const key = c.getAttribute("data-term") + "||" + c.getAttribute("data-topic");
+      previouslyTicked.add(key);
+    }
+  });
+
+  container.innerHTML = list.map(function(t, i){
+    const key = t.term + "||" + t.topic;
+    const checked = previouslyTicked.has(key) ? "checked" : "";
+    const cls2 = checked ? "custom-item checked" : "custom-item";
+    return '<label class="' + cls2 + '" data-key="' + esc(key) + '">' +
+      '<input type="checkbox" class="customTopicCheck" data-index="' + i + '" data-term="' + esc(t.term) + '" data-topic="' + esc(t.topic) + '" ' + checked + ' onchange="onCustomTopicToggle(this)">' +
+      '<span>' +
+        '<span class="tname">' + esc(t.topic) + '</span>' +
+        '<span class="tterm">' + esc(t.term) + '</span>' +
+        '<span class="tper">' + t.periods + ' periods</span>' +
+      '</span>' +
+    '</label>';
+  }).join("");
+
+  updateCustomTopicsCount();
+}
+
+function onCustomTopicToggle(cb){
+  const lbl = cb.closest(".custom-item");
+  if(lbl) lbl.classList.toggle("checked", cb.checked);
+  updateCustomTopicsCount();
+}
+
+function selectAllTopics(){
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){ c.checked = true; });
+  document.querySelectorAll(".custom-item").forEach(function(l){ l.classList.add("checked"); });
+  updateCustomTopicsCount();
+}
+function clearAllTopics(){
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){ c.checked = false; });
+  document.querySelectorAll(".custom-item").forEach(function(l){ l.classList.remove("checked"); });
+  updateCustomTopicsCount();
+}
+function selectTermTopics(term){
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){
+    if(c.getAttribute("data-term") === term){
+      c.checked = true;
+      const lbl = c.closest(".custom-item");
+      if(lbl) lbl.classList.add("checked");
+    }
+  });
+  updateCustomTopicsCount();
+}
+
+function updateCustomTopicsCount(){
+  const total = document.querySelectorAll(".customTopicCheck").length;
+  const ticked = document.querySelectorAll(".customTopicCheck:checked").length;
+  const el = $("customTopicsCount");
+  if(!el) return;
+  el.className = ticked > 0 ? "status ok" : "status";
+  el.textContent = ticked > 0
+    ? "✓ " + ticked + " of " + total + " topics selected. The scheme will use ONLY these, in the order shown."
+    : "No topics selected yet. Tick at least one to generate a custom scheme.";
+}
+
+function getSelectedTopics(){
+  const subject = $("subject").value;
+  const cls = $("classLevel").value;
+  const all = getAllTopicsFor(subject, cls);
+  const selected = [];
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){
+    if(c.checked){
+      const idx = Number(c.getAttribute("data-index"));
+      if(all[idx]) selected.push(all[idx]);
+    }
+  });
+  return selected;
+}
 
 /* ============================================================
    SCHEME
@@ -834,14 +1005,16 @@ function getRows(subject, cls, term){
 }
 function buildSegments(subject, cls, term){
   const rows = getRows(subject, cls, term);
-  return rows.map(r=>({
-    topic: r.topic,
-    periods: r.periods,
-    competency: r.competency || "",
-    outcomes: r.outcomes || [],
-    activities: r.activities || [],
-    assessment: r.assessment || []
-  }));
+  return rows.map(function(r){
+    return {
+      topic: r.topic,
+      periods: r.periods,
+      competency: r.competency || "",
+      outcomes: r.outcomes || [],
+      activities: r.activities || [],
+      assessment: r.assessment || []
+    };
+  });
 }
 
 function generateScheme(){
@@ -851,7 +1024,31 @@ function generateScheme(){
     const term = $("term").value;
     const weeks = Math.max(1, Number($("weeks").value)||12);
     const ppw = Math.max(1, Number($("ppw").value)||defaultPeriodsFor(cls));
-    const segments = buildSegments(subject, cls, term);
+
+    const customOn = $("customTopicsToggle") && $("customTopicsToggle").checked;
+    let segments = [];
+
+    if(customOn){
+      const selected = getSelectedTopics();
+      if(!selected.length){
+        $("schemeStatus").className = "status warn";
+        $("schemeStatus").textContent = "Custom topic selection is ON but no topics are ticked. Please tick at least one topic, or untick the custom option.";
+        toast("Tick at least one topic or turn off custom selection");
+        return;
+      }
+      segments = selected.map(function(t){
+        return {
+          topic: t.topic,
+          periods: t.periods,
+          competency: t.competency,
+          outcomes: t.outcomes,
+          activities: t.activities,
+          assessment: t.assessment
+        };
+      });
+    } else {
+      segments = buildSegments(subject, cls, term);
+    }
 
     if(!segments.length){
       $("schemeStatus").className = "status warn";
@@ -861,6 +1058,7 @@ function generateScheme(){
     }
 
     currentScheme = [];
+    currentSchemeIsCustom = customOn;
     let si = 0;
     let remaining = segments[0].periods;
 
@@ -878,9 +1076,9 @@ function generateScheme(){
         const take = Math.min(remaining, ppw - used);
         topics.add(seg.topic);
         subs.push(seg.topic + " — " + take + " period" + (take>1?"s":""));
-        seg.outcomes.forEach(o=>outs.add(o));
-        seg.activities.forEach(a=>acts.add(a));
-        seg.assessment.forEach(a=>ass.add(a));
+        seg.outcomes.forEach(function(o){ outs.add(o); });
+        seg.activities.forEach(function(a){ acts.add(a); });
+        seg.assessment.forEach(function(a){ ass.add(a); });
         if(!competency && seg.competency) competency = seg.competency;
         used += take;
         remaining -= take;
@@ -915,7 +1113,11 @@ function generateScheme(){
     currentLessonHTML = "";
     currentRecordHTML = "";
     $("schemeStatus").className = "status ok";
-    $("schemeStatus").textContent = "✓ Generated " + currentScheme.length + " weeks for " + subject + " " + cls + " " + term + ".";
+    if(customOn){
+      $("schemeStatus").textContent = "✓ Generated " + currentScheme.length + " weeks using YOUR custom topic selection (" + segments.length + " topics).";
+    } else {
+      $("schemeStatus").textContent = "✓ Generated " + currentScheme.length + " weeks for " + subject + " " + cls + " " + term + ".";
+    }
     toast("Scheme generated ✓");
   }catch(e){
     console.error(e);
@@ -930,10 +1132,15 @@ function renderScheme(){
   const y = $("year").value;
   const subject = $("subject").value;
 
+  const customBadge = currentSchemeIsCustom
+    ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION</div>'
+    : '';
+
   const head = `
     <div class="doc-head">
       <p class="school">${esc(s.school)}</p>
       <div class="doctitle">Scheme of Work</div>
+      ${customBadge}
       <div class="meta">
         <b>SUBJECT:</b> ${esc(subject)} &nbsp;&nbsp; <b>CLASS:</b> ${esc(cls)} &nbsp;&nbsp; <b>TERM:</b> ${esc(term)} &nbsp;&nbsp; <b>YEAR:</b> ${esc(y)}<br>
         <b>NAME OF TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
@@ -977,7 +1184,7 @@ function renderScheme(){
       </table>
     </div>`;
 
-  document.querySelectorAll("#schemePreview td[contenteditable]").forEach(td=>{
+  document.querySelectorAll("#schemePreview td[contenteditable]").forEach(function(td){
     td.addEventListener("input", function(){
       const idx = Number(this.getAttribute("data-week"));
       if(currentScheme[idx]) currentScheme[idx].remarks = this.innerText;
@@ -1013,23 +1220,20 @@ function buildLessonsList(){
 function populateLessonWeeks(){
   const sel = $("lessonWeek");
   if(!sel) return;
+  if(!currentLessons.length) buildLessonsList();
   if(!currentLessons.length){
-    buildLessonsList();
-  }
-  if(!currentLessons.length){
-    sel.innerHTML = `<option value="">— Generate scheme first —</option>`;
+    sel.innerHTML = '<option value="">— Generate scheme first —</option>';
     return;
   }
-  sel.innerHTML = currentLessons.map(L=>{
+  sel.innerHTML = currentLessons.map(function(L){
     const badge = (L.totalLessonsInWeek > 1)
-      ? `Lesson ${L.lessonNumber} of ${L.totalLessonsInWeek}`
-      : `Lesson 1`;
-    const label = `${badge} — Week ${L.weekNumber} — ${L.week.topic}`;
-    return `<option value="${L.id}">${esc(label)}</option>`;
+      ? 'Lesson ' + L.lessonNumber + ' of ' + L.totalLessonsInWeek
+      : 'Lesson 1';
+    const label = badge + ' — Week ' + L.weekNumber + ' — ' + L.week.topic;
+    return '<option value="' + L.id + '">' + esc(label) + '</option>';
   }).join("");
 }
 
-/* Split an array evenly into `n` slices; fall back to the full array if a slice is empty */
 function splitArrayEvenly(arr, n){
   if(!arr || !arr.length) return Array(n).fill([]);
   if(n <= 1) return [arr.slice()];
@@ -1053,7 +1257,7 @@ function generateLesson(silent){
 
     const sel = $("lessonWeek");
     const id = sel && sel.value ? sel.value : (currentLessons[0] && currentLessons[0].id);
-    const L = currentLessons.find(x => x.id === id) || currentLessons[0];
+    const L = currentLessons.find(function(x){ return x.id === id; }) || currentLessons[0];
     if(!L){ toast("No lesson found"); return; }
 
     const week = L.week;
@@ -1072,7 +1276,6 @@ function generateLesson(silent){
     const lessonActivities = activitiesSplit[li] && activitiesSplit[li].length ? activitiesSplit[li] : allActivities;
     const lessonAssessments = assessmentsSplit[li] && assessmentsSplit[li].length ? assessmentsSplit[li] : allAssessments;
 
-    // Auto-update the duration input
     const durationText = L.durationMins + " Minutes (" + L.periodsInLesson + " Period" + (L.periodsInLesson>1?"s":"") + " × 40 min)";
     if($("lessonDuration")) $("lessonDuration").value = durationText;
 
@@ -1083,11 +1286,15 @@ function generateLesson(silent){
     const date = $("lessonDate").value || "____________________________";
     const learners = $("learnerCount").value || "________";
 
-    const list = arr => arr.map(x=>`<li>${esc(x)}</li>`).join("");
+    const list = function(arr){ return arr.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join(""); };
 
     const lessonBadge = (numLessons > 1)
-      ? `Lesson Plan ${L.lessonNumber} of ${numLessons} — Week ${L.weekNumber}`
-      : `Lesson Plan — Week ${L.weekNumber}`;
+      ? 'Lesson Plan ' + L.lessonNumber + ' of ' + numLessons + ' — Week ' + L.weekNumber
+      : 'Lesson Plan — Week ' + L.weekNumber;
+
+    const customBadge = currentSchemeIsCustom
+      ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION</div>'
+      : '';
 
     currentLessonHTML = `
       <div class="lesson-doc print-page">
@@ -1095,6 +1302,7 @@ function generateLesson(silent){
           <p class="school">${esc(s.school)}</p>
           <div class="doctitle">Lesson Plan</div>
           <div class="lessonbadge">${esc(lessonBadge)}</div>
+          ${customBadge}
           <div class="meta">
             <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
           </div>
@@ -1204,11 +1412,16 @@ function generateRecord(silent){
       </tr>`;
     }
 
+    const customBadge = currentSchemeIsCustom
+      ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION</div>'
+      : '';
+
     currentRecordHTML = `
       <div class="lesson-doc print-page" style="max-width:1000px">
         <div class="doc-head">
           <p class="school">${esc(s.school)}</p>
           <div class="doctitle">Record of Work Covered — End of Term</div>
+          ${customBadge}
           <div class="meta">
             <b>SUBJECT:</b> ${esc(subject)} &nbsp;&nbsp; <b>CLASS:</b> ${esc(cls)} &nbsp;&nbsp; <b>TERM:</b> ${esc(term)} &nbsp;&nbsp; <b>YEAR:</b> ${esc(y)}<br>
             <b>TEACHER:</b> ${esc(s.teacher)} &nbsp;&nbsp; <b>PHONE:</b> ${esc(s.phone)} &nbsp;&nbsp; <b>EMAIL:</b> ${esc(s.email)}
@@ -1266,7 +1479,7 @@ function generateRecord(silent){
       </div>`;
 
     $("recordPreview").innerHTML = currentRecordHTML;
-    document.querySelectorAll("#recordPreview td[contenteditable]").forEach(td=>{
+    document.querySelectorAll("#recordPreview td[contenteditable]").forEach(function(td){
       td.addEventListener("input", function(){
         const idx = Number(this.getAttribute("data-roc"));
         if(currentScheme[idx]) currentScheme[idx].remarks = this.innerText;
@@ -1289,7 +1502,7 @@ function printDoc(orient){
   if(style){
     style.textContent = "@page { size: A4 " + orient + "; margin: " + (orient==="landscape"?"10mm":"14mm") + "; }";
   }
-  setTimeout(()=>window.print(), 120);
+  setTimeout(function(){ window.print(); }, 120);
 }
 
 /* ============================================================
@@ -1306,36 +1519,34 @@ function downloadWord(kind){
       const s = getSettings();
       const cls=$("classLevel").value, term=$("term").value, y=$("year").value, subject=$("subject").value;
       let rows = "";
-      currentScheme.forEach(r=>{
-        rows += `<tr>
-          <td>${esc(r.week)}</td>
-          <td>${esc(r.periods)}</td>
-          <td><b>${esc(r.topic)}</b><br>${esc(r.subtopic)}</td>
-          <td>${esc(r.outcomes)}</td>
-          <td>${esc(r.competency||r.focus)}</td>
-          <td>${esc(r.resources)}</td>
-          <td>${esc(r.evidence)}</td>
-          <td>${esc(r.reference)}</td>
-          <td>${esc(r.remarks)}</td>
-        </tr>`;
+      currentScheme.forEach(function(r){
+        rows += '<tr>' +
+          '<td>' + esc(r.week) + '</td>' +
+          '<td>' + esc(r.periods) + '</td>' +
+          '<td><b>' + esc(r.topic) + '</b><br>' + esc(r.subtopic) + '</td>' +
+          '<td>' + esc(r.outcomes) + '</td>' +
+          '<td>' + esc(r.competency||r.focus) + '</td>' +
+          '<td>' + esc(r.resources) + '</td>' +
+          '<td>' + esc(r.evidence) + '</td>' +
+          '<td>' + esc(r.reference) + '</td>' +
+          '<td>' + esc(r.remarks) + '</td>' +
+        '</tr>';
       });
-      html = `
-        <div style="text-align:center">
-          <h2 style="margin:0;font-size:16pt">${esc(s.school)}</h2>
-          <h3 style="margin:4px 0;font-size:12pt">SCHEME OF WORK</h3>
-          <p style="margin:2px 0;font-size:10pt"><b>${esc(subject)} | ${esc(cls)} | ${esc(term)} | ${esc(y)}</b></p>
-          <p style="margin:2px 0;font-size:10pt"><b>Teacher:</b> ${esc(s.teacher)} &nbsp; <b>Phone:</b> ${esc(s.phone)} &nbsp; <b>Email:</b> ${esc(s.email)}</p>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>WK</th><th>PERIODS</th><th>TOPIC / SUB-TOPIC</th><th>LEARNING OUTCOMES</th>
-              <th>LEARNING OUTCOME FOCUS</th><th>TEACHING &amp; LEARNING RESOURCES</th>
-              <th>EVIDENCE OF ACHIEVEMENT</th><th>REFERENCES</th><th>REMARKS</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>`;
+      const customBadge = currentSchemeIsCustom
+        ? '<p style="margin:4px 0;font-size:9.5pt;color:#d4a017;font-weight:800">★ CUSTOM TOPIC SELECTION</p>'
+        : '';
+      html = '<div style="text-align:center">' +
+          '<h2 style="margin:0;font-size:16pt">' + esc(s.school) + '</h2>' +
+          '<h3 style="margin:4px 0;font-size:12pt">SCHEME OF WORK</h3>' +
+          customBadge +
+          '<p style="margin:2px 0;font-size:10pt"><b>' + esc(subject) + ' | ' + esc(cls) + ' | ' + esc(term) + ' | ' + esc(y) + '</b></p>' +
+          '<p style="margin:2px 0;font-size:10pt"><b>Teacher:</b> ' + esc(s.teacher) + ' &nbsp; <b>Phone:</b> ' + esc(s.phone) + ' &nbsp; <b>Email:</b> ' + esc(s.email) + '</p>' +
+        '</div>' +
+        '<table><thead><tr>' +
+          '<th>WK</th><th>PERIODS</th><th>TOPIC / SUB-TOPIC</th><th>LEARNING OUTCOMES</th>' +
+          '<th>LEARNING OUTCOME FOCUS</th><th>TEACHING &amp; LEARNING RESOURCES</th>' +
+          '<th>EVIDENCE OF ACHIEVEMENT</th><th>REFERENCES</th><th>REMARKS</th>' +
+        '</tr></thead><tbody>' + rows + '</tbody></table>';
       filename = "Scheme_of_Work_" + subject + "_" + cls + ".doc";
       orient = "landscape";
     } else if(kind === "lesson"){
@@ -1350,33 +1561,32 @@ function downloadWord(kind){
       orient = "portrait";
     }
 
-    const css = `
-      @page { size: A4 ${orient}; mso-page-orientation: ${orient}; margin: 12mm; }
-      body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; color:#1f2937; }
-      h1,h2,h3 { color:#0b2545; }
-      h2 { font-size: 11pt; border-bottom:1px solid #0b2545; padding-bottom:3px; }
-      table { border-collapse: collapse; width: 100%; }
-      th, td { border: 1px solid #444; padding: 5px; vertical-align: top; font-size: 8.5pt; }
-      th { background: #0b2545; color: #fff; text-align: left; font-size: 8pt; }
-      tr:nth-child(even) td { background: #f4f7fb; }
-      ul { margin: 4px 0 4px 20px; padding: 0; }
-      li { margin: 2px 0; font-size: 10pt; }
-      .doc-head { text-align:center; margin-bottom: 12px; }
-      .school { font-size: 15pt; font-weight: 900; margin: 0; color: #0b2545; }
-      .doctitle { font-size: 12pt; letter-spacing: 2px; margin: 4px 0; color: #1769aa; }
-      .lessonbadge { display:inline-block; background:#0b2545; color:#fff; padding:3px 12px; border-radius:14px; font-size:10pt; font-weight:800; margin:4px 0; }
-      .meta { font-size: 9.5pt; line-height: 1.5; }
-      .lesson-doc { max-width: none; padding: 0; }
-      .roc th, .roc td { font-size: 9pt; }
-      table.sig { border-collapse: collapse; width: 100%; margin-top: 22px; }
-      table.sig td { border: 0; padding: 16px 8px; font-size: 10pt; vertical-align: bottom; }
-      table.sig td.line { border-bottom: 1.2px solid #334155; height: 30px; }
-    `;
+    const css = '@page { size: A4 ' + orient + '; mso-page-orientation: ' + orient + '; margin: 12mm; }' +
+      'body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; color:#1f2937; }' +
+      'h1,h2,h3 { color:#0b2545; }' +
+      'h2 { font-size: 11pt; border-bottom:1px solid #0b2545; padding-bottom:3px; }' +
+      'table { border-collapse: collapse; width: 100%; }' +
+      'th, td { border: 1px solid #444; padding: 5px; vertical-align: top; font-size: 8.5pt; }' +
+      'th { background: #0b2545; color: #fff; text-align: left; font-size: 8pt; }' +
+      'tr:nth-child(even) td { background: #f4f7fb; }' +
+      'ul { margin: 4px 0 4px 20px; padding: 0; }' +
+      'li { margin: 2px 0; font-size: 10pt; }' +
+      '.doc-head { text-align:center; margin-bottom: 12px; }' +
+      '.school { font-size: 15pt; font-weight: 900; margin: 0; color: #0b2545; }' +
+      '.doctitle { font-size: 12pt; letter-spacing: 2px; margin: 4px 0; color: #1769aa; }' +
+      '.lessonbadge { display:inline-block; background:#0b2545; color:#fff; padding:3px 12px; border-radius:14px; font-size:10pt; font-weight:800; margin:4px 0; }' +
+      '.custombadge { display:inline-block; background:#d4a017; color:#3b2700; padding:2px 10px; border-radius:12px; font-size:9pt; font-weight:800; margin:4px 0; }' +
+      '.meta { font-size: 9.5pt; line-height: 1.5; }' +
+      '.lesson-doc { max-width: none; padding: 0; }' +
+      '.roc th, .roc td { font-size: 9pt; }' +
+      'table.sig { border-collapse: collapse; width: 100%; margin-top: 22px; }' +
+      'table.sig td { border: 0; padding: 16px 8px; font-size: 10pt; vertical-align: bottom; }' +
+      'table.sig td.line { border-bottom: 1.2px solid #334155; height: 30px; }';
 
-    const word = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
-      + '<head><meta charset="utf-8"><title>' + esc(filename) + '</title>'
-      + '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->'
-      + '<style>' + css + '</style></head><body>' + html + '</body></html>';
+    const word = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
+      '<head><meta charset="utf-8"><title>' + esc(filename) + '</title>' +
+      '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->' +
+      '<style>' + css + '</style></head><body>' + html + '</body></html>';
 
     const blob = new Blob(['\ufeff', word], {type:"application/msword"});
     const a = document.createElement("a");
@@ -1385,7 +1595,7 @@ function downloadWord(kind){
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
     toast("Word document downloaded ✓");
   }catch(e){
     console.error(e);
@@ -1403,7 +1613,8 @@ function saveScheme(){
       subject:$("subject").value,
       cls:$("classLevel").value,
       term:$("term").value,
-      year:$("year").value
+      year:$("year").value,
+      custom: currentSchemeIsCustom
     },
     rows: currentScheme
   }));
@@ -1415,6 +1626,7 @@ function loadSaved(){
     if(!raw){toast("No saved scheme found.");return}
     const data = JSON.parse(raw);
     currentScheme = data.rows || [];
+    currentSchemeIsCustom = !!(data.meta && data.meta.custom);
     if(data.meta){
       $("subject").value = data.meta.subject || "ICT";
       $("classLevel").value = data.meta.cls || "S.1";
@@ -1439,7 +1651,7 @@ function copyDoc(kind){
   if(kind === "lesson") text = $("lessonPreview").innerText;
   if(kind === "record") text = $("recordPreview").innerText;
   if(navigator.clipboard){
-    navigator.clipboard.writeText(text).then(()=>toast("Copied to clipboard ✓"));
+    navigator.clipboard.writeText(text).then(function(){ toast("Copied to clipboard ✓"); });
   } else {
     const ta = document.createElement("textarea");
     ta.value = text;
