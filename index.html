@@ -73,16 +73,25 @@ button,input,select,textarea{font:inherit}
 .custom-toggle-row input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--gold)}
 .custom-toggle-row label{margin:0;cursor:pointer;font-weight:800;font-size:13px;color:#5c3d00;text-transform:none;letter-spacing:0}
 .custom-panel{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:16px;background:#f8fafc}
-.custom-panel .cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.custom-panel .cp-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px}
 .custom-panel .cp-head b{color:var(--navy);font-size:13.5px}
-.custom-list{max-height:320px;overflow-y:auto;display:grid;grid-template-columns:1fr;gap:6px;padding-right:4px}
+.cp-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #cbd5e1}
+.cp-filters .fbtn{padding:6px 12px;font-size:11.5px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:#334e68;font-weight:700;cursor:pointer;transition:.15s}
+.cp-filters .fbtn:hover{border-color:var(--blue);color:var(--blue)}
+.cp-filters .fbtn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cp-filters .fbtn.classbtn{background:#eaf3fb;color:var(--blue);border-color:#b6d4f0}
+.cp-filters .fbtn.classbtn:hover{background:var(--blue);color:#fff}
+.cp-filters .fbtn.clear{background:#fff1f0;color:var(--danger);border-color:#fbc4c0}
+.custom-list{max-height:380px;overflow-y:auto;display:grid;grid-template-columns:1fr;gap:6px;padding-right:4px}
 .custom-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:#fff;border:1.5px solid #d7dee8;border-radius:9px;cursor:pointer;font-size:12.5px;transition:.15s}
 .custom-item:hover{border-color:var(--blue);background:#f8fcff}
 .custom-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:var(--blue);flex-shrink:0}
 .custom-item .tname{font-weight:800;color:var(--navy)}
+.custom-item .tclass{display:inline-block;background:var(--navy);color:#fff;padding:1px 7px;border-radius:9px;font-size:10px;font-weight:800;margin-right:8px;letter-spacing:.5px}
 .custom-item .tterm{display:inline-block;background:#eaf3fb;color:var(--blue);padding:1px 8px;border-radius:10px;font-size:10.5px;font-weight:800;margin-left:8px;letter-spacing:.4px}
 .custom-item .tper{color:var(--muted);font-size:11px;margin-left:8px;font-weight:600}
 .custom-item.checked{background:#eaf3fb;border-color:var(--blue)}
+.custom-item.checked .tclass{background:var(--blue)}
 
 /* DOCUMENT */
 .doc-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 10px rgba(15,23,42,.06)}
@@ -237,21 +246,15 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
           <!-- OPTIONAL CUSTOM TOPIC SELECTION -->
           <div class="custom-toggle-row">
             <input type="checkbox" id="customTopicsToggle" onchange="toggleCustomTopics()">
-            <label for="customTopicsToggle">✋ Custom topic selection (optional) — pick topics across any term, teach ahead of the syllabus</label>
+            <label for="customTopicsToggle">✋ Custom topic selection (optional) — pick topics from any class in this level (O-Level S.1–S.4 or A-Level S.5–S.6), teach ahead of the syllabus</label>
           </div>
           <div id="customTopicsPanel" class="custom-panel hidden">
             <div class="cp-head">
-              <b>Available topics for <span id="customSubjectLabel">this subject</span> <span id="customClassLabel"></span> — all terms</b>
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectAllTopics()">✓ Select all</button>
-                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="clearAllTopics()">✗ Clear</button>
-                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 1')">Term 1</button>
-                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 2')">Term 2</button>
-                <button type="button" class="btn btn-light" style="padding:6px 12px;font-size:11.5px" onclick="selectTermTopics('Term 3')">Term 3</button>
-              </div>
+              <b id="customHeaderTitle">Available topics — all classes in this level, all terms</b>
             </div>
+            <div id="customFilters" class="cp-filters"></div>
             <div id="customTopicsList" class="custom-list"></div>
-            <div class="note" style="margin-top:10px">When enabled, the scheme will use <b>ONLY</b> the topics you tick, in the order listed above — regardless of the term they belong to in the syllabus. Leave this unticked to follow the official term sequence.</div>
+            <div class="note" style="margin-top:10px">When enabled, the scheme will use <b>ONLY</b> the topics you tick, in the order listed above — regardless of which class or term they belong to in the syllabus. Leave this unticked to follow the official term sequence.</div>
             <div id="customTopicsCount" class="status" style="margin-top:8px">No topics selected yet.</div>
           </div>
 
@@ -351,7 +354,9 @@ table.sig td.line{border-bottom:1.2px solid #334155;height:32px;min-width:120px}
             • Scheme of work prints in <b>A4 landscape</b>; lesson plans and records print in <b>A4 portrait</b>.<br>
             • Word downloads carry the correct orientation via MS Word page settings.<br>
             • Lesson plans are <b>per 2-period lesson</b> (80 min each). 4 periods/week = 2 lesson plans/week.<br>
-            • <b>Custom topic selection</b> (optional) lets you pick topics across any term to teach ahead of the syllabus.<br>
+            • <b>Custom topic selection</b> (optional) lets you pick topics from <b>any class in the level</b>:<br>
+            &nbsp;&nbsp;&nbsp;– O-Level (S.1 – S.4): pick from S.1, S.2, S.3, S.4<br>
+            &nbsp;&nbsp;&nbsp;– A-Level (S.5 – S.6): pick from S.5, S.6<br>
             • Curriculum data is embedded from official NCDC syllabi.
           </p>
         </div>
@@ -870,29 +875,47 @@ function onClassChange(){
 }
 
 /* ============================================================
-   CUSTOM TOPIC SELECTION (optional feature)
+   CUSTOM TOPIC SELECTION (level-wide, optional)
    ============================================================ */
+function getLevelClasses(cls){
+  const oLevel = ["S.1","S.2","S.3","S.4"];
+  const aLevel = ["S.5","S.6"];
+  if(oLevel.indexOf(cls) !== -1) return oLevel;
+  if(aLevel.indexOf(cls) !== -1) return aLevel;
+  return [cls];
+}
+
+function getLevelName(cls){
+  const oLevel = ["S.1","S.2","S.3","S.4"];
+  const aLevel = ["S.5","S.6"];
+  if(oLevel.indexOf(cls) !== -1) return "O-Level (S.1 – S.4)";
+  if(aLevel.indexOf(cls) !== -1) return "A-Level (S.5 – S.6)";
+  return cls;
+}
+
 function toggleCustomTopics(){
   const on = $("customTopicsToggle").checked;
   $("customTopicsPanel").classList.toggle("hidden", !on);
-  if(on){
-    renderCustomTopicsList();
-  }
+  if(on) renderCustomTopicsList();
 }
 
-function getAllTopicsFor(subject, cls){
+function getAllTopicsForLevel(subject, cls){
+  const classes = getLevelClasses(cls);
   const all = [];
-  ["Term 1","Term 2","Term 3"].forEach(function(term){
-    const rows = getRows(subject, cls, term);
-    rows.forEach(function(r){
-      all.push({
-        term: term,
-        topic: r.topic,
-        periods: r.periods,
-        competency: r.competency || "",
-        outcomes: r.outcomes || [],
-        activities: r.activities || [],
-        assessment: r.assessment || []
+  classes.forEach(function(c){
+    ["Term 1","Term 2","Term 3"].forEach(function(term){
+      const rows = getRows(subject, c, term);
+      rows.forEach(function(r){
+        all.push({
+          sourceClass: c,
+          term: term,
+          topic: r.topic,
+          periods: r.periods,
+          competency: r.competency || "",
+          outcomes: r.outcomes || [],
+          activities: r.activities || [],
+          assessment: r.assessment || []
+        });
       });
     });
   });
@@ -902,14 +925,36 @@ function getAllTopicsFor(subject, cls){
 function renderCustomTopicsList(){
   const subject = $("subject").value;
   const cls = $("classLevel").value;
-  const list = getAllTopicsFor(subject, cls);
+  const classes = getLevelClasses(cls);
+  const list = getAllTopicsForLevel(subject, cls);
 
-  if($("customSubjectLabel")) $("customSubjectLabel").textContent = subject;
-  if($("customClassLabel")) $("customClassLabel").textContent = cls;
+  // Update header
+  const headerTitle = $("customHeaderTitle");
+  if(headerTitle){
+    headerTitle.textContent = "Available topics — " + subject + " · " + getLevelName(cls) + " · all classes, all terms";
+  }
 
+  // Build filter row
+  const filters = $("customFilters");
+  if(filters){
+    let html = '';
+    html += '<button type="button" class="fbtn primary" onclick="selectAllTopics()">✓ Select all</button>';
+    html += '<button type="button" class="fbtn clear" onclick="clearAllTopics()">✗ Clear all</button>';
+    html += '<span style="width:1px;background:#cbd5e1;margin:0 4px"></span>';
+    classes.forEach(function(c){
+      html += '<button type="button" class="fbtn classbtn" onclick="selectClassTopics(\'' + c + '\')">' + c + ' all</button>';
+    });
+    html += '<span style="width:1px;background:#cbd5e1;margin:0 4px"></span>';
+    ["Term 1","Term 2","Term 3"].forEach(function(t){
+      html += '<button type="button" class="fbtn" onclick="selectTermTopics(\'' + t + '\')">' + t + '</button>';
+    });
+    filters.innerHTML = html;
+  }
+
+  // Build list
   const container = $("customTopicsList");
   if(!list.length){
-    container.innerHTML = '<div class="note" style="padding:14px">No topics available for this subject/class.</div>';
+    container.innerHTML = '<div class="note" style="padding:14px">No topics available for this subject/level.</div>';
     updateCustomTopicsCount();
     return;
   }
@@ -918,18 +963,19 @@ function renderCustomTopicsList(){
   const previouslyTicked = new Set();
   document.querySelectorAll(".customTopicCheck").forEach(function(c){
     if(c.checked){
-      const key = c.getAttribute("data-term") + "||" + c.getAttribute("data-topic");
+      const key = c.getAttribute("data-class") + "||" + c.getAttribute("data-term") + "||" + c.getAttribute("data-topic");
       previouslyTicked.add(key);
     }
   });
 
   container.innerHTML = list.map(function(t, i){
-    const key = t.term + "||" + t.topic;
+    const key = t.sourceClass + "||" + t.term + "||" + t.topic;
     const checked = previouslyTicked.has(key) ? "checked" : "";
     const cls2 = checked ? "custom-item checked" : "custom-item";
     return '<label class="' + cls2 + '" data-key="' + esc(key) + '">' +
-      '<input type="checkbox" class="customTopicCheck" data-index="' + i + '" data-term="' + esc(t.term) + '" data-topic="' + esc(t.topic) + '" ' + checked + ' onchange="onCustomTopicToggle(this)">' +
+      '<input type="checkbox" class="customTopicCheck" data-index="' + i + '" data-class="' + esc(t.sourceClass) + '" data-term="' + esc(t.term) + '" data-topic="' + esc(t.topic) + '" ' + checked + ' onchange="onCustomTopicToggle(this)">' +
       '<span>' +
+        '<span class="tclass">' + esc(t.sourceClass) + '</span>' +
         '<span class="tname">' + esc(t.topic) + '</span>' +
         '<span class="tterm">' + esc(t.term) + '</span>' +
         '<span class="tper">' + t.periods + ' periods</span>' +
@@ -966,22 +1012,38 @@ function selectTermTopics(term){
   });
   updateCustomTopicsCount();
 }
+function selectClassTopics(clsName){
+  document.querySelectorAll(".customTopicCheck").forEach(function(c){
+    if(c.getAttribute("data-class") === clsName){
+      c.checked = true;
+      const lbl = c.closest(".custom-item");
+      if(lbl) lbl.classList.add("checked");
+    }
+  });
+  updateCustomTopicsCount();
+}
 
 function updateCustomTopicsCount(){
   const total = document.querySelectorAll(".customTopicCheck").length;
   const ticked = document.querySelectorAll(".customTopicCheck:checked").length;
   const el = $("customTopicsCount");
   if(!el) return;
+  // Count unique classes
+  const classSet = new Set();
+  document.querySelectorAll(".customTopicCheck:checked").forEach(function(c){
+    classSet.add(c.getAttribute("data-class"));
+  });
+  const classList = Array.from(classSet).sort().join(", ");
   el.className = ticked > 0 ? "status ok" : "status";
   el.textContent = ticked > 0
-    ? "✓ " + ticked + " of " + total + " topics selected. The scheme will use ONLY these, in the order shown."
+    ? "✓ " + ticked + " of " + total + " topics selected" + (classList ? " (from: " + classList + ")" : "") + ". The scheme will use ONLY these, in the order shown."
     : "No topics selected yet. Tick at least one to generate a custom scheme.";
 }
 
 function getSelectedTopics(){
   const subject = $("subject").value;
   const cls = $("classLevel").value;
-  const all = getAllTopicsFor(subject, cls);
+  const all = getAllTopicsForLevel(subject, cls);
   const selected = [];
   document.querySelectorAll(".customTopicCheck").forEach(function(c){
     if(c.checked){
@@ -1133,7 +1195,7 @@ function renderScheme(){
   const subject = $("subject").value;
 
   const customBadge = currentSchemeIsCustom
-    ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION</div>'
+    ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION — ' + esc(getLevelName(cls)) + '</div>'
     : '';
 
   const head = `
@@ -1193,7 +1255,7 @@ function renderScheme(){
 }
 
 /* ============================================================
-   LESSONS — one per 2-period block (each 80 min)
+   LESSONS — one per 2-period block
    ============================================================ */
 function buildLessonsList(){
   currentLessons = [];
@@ -1413,7 +1475,7 @@ function generateRecord(silent){
     }
 
     const customBadge = currentSchemeIsCustom
-      ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION</div>'
+      ? '<div class="custombadge">★ CUSTOM TOPIC SELECTION — ' + esc(getLevelName(cls)) + '</div>'
       : '';
 
     currentRecordHTML = `
@@ -1533,7 +1595,7 @@ function downloadWord(kind){
         '</tr>';
       });
       const customBadge = currentSchemeIsCustom
-        ? '<p style="margin:4px 0;font-size:9.5pt;color:#d4a017;font-weight:800">★ CUSTOM TOPIC SELECTION</p>'
+        ? '<p style="margin:4px 0;font-size:9.5pt;color:#d4a017;font-weight:800">★ CUSTOM TOPIC SELECTION — ' + esc(getLevelName(cls)) + '</p>'
         : '';
       html = '<div style="text-align:center">' +
           '<h2 style="margin:0;font-size:16pt">' + esc(s.school) + '</h2>' +
